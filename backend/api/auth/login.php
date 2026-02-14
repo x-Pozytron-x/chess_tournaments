@@ -1,0 +1,72 @@
+<?php
+header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Credentials: true");
+
+$input = json_decode(file_get_contents('php://input'), true);
+
+if (!$input || !isset($input['username']) || !isset($input['password'])) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Необходимо указать логин и пароль'
+    ]);
+    exit;
+}
+
+$username = trim($input['username']);
+$password = $input['password'];
+
+try {
+  require_once __DIR__ . '/../config/database.php';
+  $db = Database::getInstance();
+  
+  $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_password_hash, user_fullname, user_role FROM tbl_users WHERE (user_name = :username OR user_email = :username) AND is_active = TRUE");
+  $stmt->execute([':username' => $username]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+  if (!$user) {
+    http_response_code(401);
+    echo json_encode([
+      'success' => false,
+      'message' => 'Пользователь не найден или неактивен'
+    ]);
+    exit;
+  }
+  
+  if (!password_verify($password, $user['password_hash'])) {
+    http_response_code(401);
+    echo json_encode([
+      'success' => false,
+      'message' => 'Неверный пароль'
+    ]);
+    exit;
+  }
+    
+  // Вариант 1: Используем PHP сессии (проще)
+  session_start();
+  $_SESSION['user_id'] = $user['id'];
+  $_SESSION['username'] = $user['username'];
+  
+  // Вариант 2: JWT токен (более современно для SPA)
+  // Здесь можно сгенерировать JWT
+  
+  // Убираем пароль из ответа
+  unset($user['password_hash']);
+  
+  echo json_encode([
+    'success' => true,
+    'message' => 'Вход выполнен успешно',
+    'user' => $user,
+    'token' => session_id() // или JWT токен
+  ]);
+    
+} catch (PDOException $e) {
+  error_log("Login error: " . $e->getMessage());
+  
+  http_response_code(500);
+  echo json_encode([
+      'success' => false, 
+      'message' => 'Ошибка сервера. Попробуйте позже.'
+  ]);
+}
