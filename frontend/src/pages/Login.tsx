@@ -1,7 +1,7 @@
 
 
 
-export async function Login() {
+export const Login = () => {
   return (
     <div> login</div>
   )
