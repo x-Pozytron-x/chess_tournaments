@@ -273,7 +273,7 @@
     position: relative;
 }
 
-.quote-section blockquote {
+.quote-section .blockquote {
     font-size: 1.8rem;
     font-weight: 300;
     color: #fff;
@@ -283,8 +283,8 @@
     position: relative;
 }
 
-.quote-section blockquote::before,
-.quote-section blockquote::after {
+.quote-section .blockquote::before,
+.quote-section .blockquote::after {
     content: '"';
     font-size: 4rem;
     color: #ffd700;
@@ -292,12 +292,12 @@
     position: absolute;
 }
 
-.quote-section blockquote::before {
+.quote-section .blockquote::before {
     left: -2rem;
     top: -1rem;
 }
 
-.quote-section blockquote::after {
+.quote-section .blockquote::after {
     right: -2rem;
     bottom: -2rem;
 }

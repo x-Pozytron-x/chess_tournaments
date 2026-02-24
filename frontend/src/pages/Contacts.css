@@ -182,7 +182,7 @@
             }
         }
         
-        .info-card {
+       .extra-info .info-card {
             background: rgba(22, 27, 34, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -195,12 +195,12 @@
             transition: all 0.3s ease;
         }
         
-        .info-card:hover {
+        .extra-info .info-card:hover {
             background: rgba(22, 27, 34, 0.8);
             border-color: rgba(255, 215, 0, 0.2);
         }
         
-        .info-icon {
+        .extra-info .info-icon {
             width: 48px;
             height: 48px;
             border-radius: 16px;
@@ -210,33 +210,33 @@
             justify-content: center;
         }
         
-        .info-icon svg {
+        .extra-info .info-icon svg {
             width: 24px;
             height: 24px;
             fill: #0a0c0f;
         }
         
-        .info-content h3 {
+        .extra-info .info-content h3 {
             color: white;
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
         }
         
-        .info-content p {
+        .extra-info .info-content p {
             color: #8b949e;
             font-size: 0.95rem;
             line-height: 1.5;
         }
         
-        .info-content a {
+       .extra-info  .info-content a {
             color: #ffd700;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
         }
         
-        .info-content a:hover {
+        .extra-info .info-content a:hover {
             color: #64ffda;
         }
         

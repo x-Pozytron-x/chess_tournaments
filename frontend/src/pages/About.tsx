@@ -80,9 +80,9 @@ export const About = () => {
             </div>
 
             <div className="quote-section">
-              <blockquote>
+              <div className='blockquote'>
                 Шахматы — это не просто игра. Это способ мышления, который помогает в жизни.
-              </blockquote>
+              </div>
               <div className="quote-author">
                 — Основатель проекта, между партиями
               </div>
