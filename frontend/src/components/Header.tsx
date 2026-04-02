@@ -5,12 +5,11 @@ export const Header = () => {
   return (
 
     <header className='header'>
-      <div className="logo">
+      <Link to="/" className="logo">
         <img src={logotype} alt="" width="70px" />
         <span>CyberChess</span>
-      </div>
+      </Link>
       <nav className='nav'>
-        <Link to="/">Главная</Link>
         <Link to="/contacts">Контакты</Link>
         <Link to="/about">О сайте</Link>
         <Link to="/register" className='register'>Регистрация</Link>
