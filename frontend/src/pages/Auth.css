@@ -112,3 +112,9 @@
   display: inline-block;
   color: #ffe86d;
 }
+
+.authForm_error {
+  padding: 3px;
+  font-size: 12px;
+  color: pink;
+}

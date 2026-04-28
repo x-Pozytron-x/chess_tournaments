@@ -1,10 +1,13 @@
 export type ApiResponse<T> = {
   success: boolean
   data?: T
-  error?: string
+  message?: string
 }
-
-import type { News } from '../types/News'
+type ApiSuccess<T> = {
+  data: T
+  message?: string
+}
+import type { User } from '../types/User'
 
 // api/client.ts — базовый fetcher, чтобы не повторять логику в каждом запросе
 export class ApiError extends Error {
@@ -17,7 +20,7 @@ export class ApiError extends Error {
   }
 }
 
-async function apiFetch<T>(url: string, options?: RequestInit): Promise<T> {
+async function apiFetch<T>(url: string, options?: RequestInit): Promise<ApiSuccess<T>> {
   let res: Response
 
   try {
@@ -29,22 +32,31 @@ async function apiFetch<T>(url: string, options?: RequestInit): Promise<T> {
   const json: ApiResponse<T> = await res.json()
 
   if (!res.ok || !json.success) {
-    throw new ApiError(json.error ?? 'Неизвестная ошибка', res.status)
+    //console.log('errrr - ' + json.message)
+    throw new ApiError(json.message ?? 'Неизвестная ошибка', res.status)
   }
 
   if (json.data === undefined) {
     throw new ApiError('Сервер вернул пустой ответ')
   }
 
-  return json.data
+  return {
+    data: json.data,
+    message: json.message
+  }
 }
 
-// api/news.ts
-export async function getNews(): Promise<News[]> {
-  return apiFetch<News[]>('/api/news.php')
+type Fields = {
+  login: string,
+  pass: string,
+  repass: string,
+  invited: string,
+  agree: boolean,
 }
-
-// И так же легко добавлять новые эндпоинты:
-export async function getNewsById(id: number): Promise<News> {
-  return apiFetch<News>(`/api/news.php?id=${id}`)
+export async function addUser(fields: Fields): Promise<ApiSuccess<User>> {
+  return apiFetch<User>('/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  })
 }

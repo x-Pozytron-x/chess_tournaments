@@ -4,7 +4,7 @@ class Database {
   private $connection;
   
   private function __construct() {
-  $envFile = '../.env';
+  $envFile = __DIR__ . '/../.env';
   $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
   foreach ($lines as $line) {

@@ -30,11 +30,11 @@ if ($method === 'GET') {
 
 if ($method === 'POST') {
   if ($path === 'api/login') {
-    require_once __DIR__ . '/api/login.php';
+    require_once __DIR__ . '/api/auth/login.php';
     exit;
   }
   if ($path === 'api/register') {
-    require_once __DIR__ . '/api/register.php';
+    require_once __DIR__ . '/api/auth/register.php';
     exit;
   }
   if ($path === 'api/logout') {
