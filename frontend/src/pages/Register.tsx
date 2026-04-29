@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import './Auth.css';
 
-import { addUser } from '../api/register.tsx'
+import { addUser } from '../api/register'
+import { ApiError } from '../api/apiError';
+import { messages } from './../utils/messages'
 interface FormFields {
   login: string;
   pass: string;
@@ -82,11 +84,11 @@ export const Register = () => {
 
     try {
       const response = await addUser(fields)
-      setResult(response.message ?? 'Успешно')
+      setResult("Регистрация успешна")
       console.log(response)
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setResult(err.message)
+      if (err instanceof ApiError) {
+        setResult(messages[err.code] ?? "Ошибка")
       } else {
         setResult('Unknown error')
       }
@@ -95,7 +97,6 @@ export const Register = () => {
     }
   };
 
-  // console.log('result - ' + result)
   return (
     <form className="authForm" onSubmit={handleSubmit}>
       <div className="authForm_content">

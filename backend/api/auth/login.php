@@ -9,7 +9,7 @@ if (!$input || !isset($input['username']) || !isset($input['password'])) {
     http_response_code(400);
     echo json_encode([
         'success' => false,
-        'message' => 'Необходимо указать логин и пароль'
+        'errorCode' => 'EMPTY_FIELD'
     ]);
     exit;
 }
@@ -18,10 +18,10 @@ $username = trim($input['username']);
 $password = $input['password'];
 
 try {
-  require_once __DIR__ . '/../config/database.php';
+  require_once __DIR__ . '/../../config/database.php';
   $db = Database::getInstance();
   
-  $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_password_hash, user_fullname, user_role FROM tbl_users WHERE (user_name = :username OR user_email = :username) AND is_active = TRUE");
+  $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_password_hash, user_fullname, user_role FROM tbl_users WHERE (user_name = :username) AND is_active = TRUE");
   $stmt->execute([':username' => $username]);
   $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -29,16 +29,16 @@ try {
     http_response_code(401);
     echo json_encode([
       'success' => false,
-      'message' => 'Пользователь не найден или неактивен'
+      'errorCode' => 'UNKNOWN_USER'
     ]);
     exit;
   }
   
-  if (!password_verify($password, $user['password_hash'])) {
+  if (!password_verify($password, $user['user_password_hash'])) {
     http_response_code(401);
     echo json_encode([
       'success' => false,
-      'message' => 'Неверный пароль'
+      'errorCode' => 'INVALID_PASSWORD'
     ]);
     exit;
   }
@@ -52,12 +52,12 @@ try {
   // Здесь можно сгенерировать JWT
   
   // Убираем пароль из ответа
-  unset($user['password_hash']);
+  unset($user['user_password_hash']);
   
   echo json_encode([
     'success' => true,
-    'message' => 'Вход выполнен успешно',
-    'user' => $user,
+    //'message' => 'Вход выполнен успешно',
+    'data' => $user,
     'token' => session_id() // или JWT токен
   ]);
     
@@ -67,6 +67,6 @@ try {
   http_response_code(500);
   echo json_encode([
       'success' => false, 
-      'message' => 'Ошибка сервера. Попробуйте позже.'
+      'errorCode' => 'NETWORK_ERROR'
   ]);
 }

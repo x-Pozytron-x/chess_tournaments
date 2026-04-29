@@ -7,7 +7,10 @@ $input = json_decode(file_get_contents('php://input'), true);
 // Проверяем обязательные поля нашей формы
 if (!$input || !isset($input['login']) || !isset($input['pass']) || !isset($input['invited'])) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'errors' => ['general' => 'Заполните все поля']]);
+    echo json_encode([
+      'success' => false, 
+      'errorCode' => 'EMPTY_FIELD'
+      ]);
     exit;
 }
 
@@ -68,7 +71,7 @@ try {
         http_response_code(422);
         echo json_encode([
           'success' => false, 
-          'message' =>  'Этот никнейм уже занят'
+          'errorCode' => 'USER_EXISTS'
         ]);
         exit;
     }
@@ -102,6 +105,6 @@ try {
     http_response_code(500);
   echo json_encode([
       'success' => false, 
-      'message' => 'Ошибка сервера при регистрации'
+      'errorCode' => 'NETWORK_ERROR'
   ]);
 }
