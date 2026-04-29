@@ -11,6 +11,7 @@ import { Contacts } from "./pages/Contacts.tsx";
 import { About } from "./pages/About.tsx";
 import { Login } from "./pages/Login.tsx";
 import { Register } from "./pages/Register.tsx";
+import { Profile } from "./pages/Profile.tsx";
 
 const ROUTES = [
   { path: "/", component: Home },
@@ -19,7 +20,7 @@ const ROUTES = [
   { path: "/login", component: Login },
   { path: "/register", component: Register },
   // { path: "/signup", component: SignUp },
-  // { path: "/profile", component: Profile },
+  { path: "/profile", component: Profile },
 ];
 
 

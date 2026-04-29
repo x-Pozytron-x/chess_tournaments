@@ -1,5 +1,7 @@
 export type User = {
-  news_id: number
-  news_title: string
-  news_descr: string
+  user_id: number,
+  user_name: string,
+  user_email: string,
+  user_fullname: string,
+  user_role: number
 }

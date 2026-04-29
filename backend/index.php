@@ -26,6 +26,12 @@ if ($method === 'GET') {
     exit;
   }
 }
+if ($method === 'GET') {
+  if ($path === 'api/me') {
+   require_once __DIR__ . '/api/me.php';
+    exit;
+  }
+}
 
 
 if ($method === 'POST') {
@@ -38,7 +44,7 @@ if ($method === 'POST') {
     exit;
   }
   if ($path === 'api/logout') {
-    require_once __DIR__ . '/api/logout.php';
+    require_once __DIR__ . '/api/auth/logout.php';
     exit;
   }
 }

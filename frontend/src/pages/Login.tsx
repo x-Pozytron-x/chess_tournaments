@@ -1,16 +1,20 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+import { useAuthStore } from '../store/authStore'
+
 import type { FC } from 'react';
 import './Auth.css';
 
-import { ApiError } from '../api/apiError'
+
+// import { ApiError } from '../api/apiError'
 import { messages } from './../utils/messages'
-import { apiFetch } from '../api/apiFetch'
+// import { apiFetch } from '../api/apiFetch'
 
 interface LoginFields {
   username: string;
   password: string;
-  remmember: boolean;
+  remember: boolean;
 }
 
 interface User {
@@ -23,14 +27,21 @@ interface User {
 type Errors = Partial<Record<keyof LoginFields, string>>;
 
 export const Login: FC = () => {
+  const navigate = useNavigate()
+
+  const login = useAuthStore(s => s.login)
+  const user = useAuthStore(s => s.user)
+  const error = useAuthStore(s => s.error)
+
+
   const [errors, setErrors] = useState<Errors>({});
   const [fields, setFields] = useState<LoginFields>({
     username: '',
     password: '',
-    remmember: false,
+    remember: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const [result, setResult] = useState<string>('');
+  // const [result, setResult] = useState<string>('');
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, checked } = e.target;
@@ -45,37 +56,39 @@ export const Login: FC = () => {
   };
 
   const handleSubmit = async (e: React.SubmitEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    try {
+    await login({
+      username: fields.username,
+      password: fields.password,
+      remember: fields.remember,
+    })
 
-
-      let res = await apiFetch<User>('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fields),
-      })
-
-      setResult("Привет, " + res.user_name + "! Вы успешно вошли")
-      console.log(res);
-
-    } catch (err) {
-      // throw new ApiError('Нет соединения с сервером')
-      if (err instanceof ApiError) {
-        // console.log(err.status)
-        setResult(messages[err.code] ?? "Ошибка")
-      }
-    } finally {
-      setSubmitted(true)
-    }
+    setSubmitted(true)
   }
+
+  useEffect(() => {
+    if (user) {
+      navigate('/profile')
+    }
+  }, [user])
 
   return (
     <form className="authForm" onSubmit={handleSubmit}>
       <div className="authForm_content">
         <h3 className="authForm_title">Вход</h3>
 
-        {submitted && <p className="authForm_success">{result}</p>}
+        {submitted && user && (
+          <p className="authForm_success">
+            Привет, {user.user_name}! Вы успешно вошли
+          </p>
+        )}
+
+        {submitted && error && (
+          <p className="authForm_error">
+            {messages[error]}
+          </p>
+        )}
 
         <p className="authForm_row">
           <i>👤</i>
@@ -106,12 +119,12 @@ export const Login: FC = () => {
             className="authForm_chkbx"
             name="remember"
             type="checkbox"
-            checked={fields.remmember}
+            checked={fields.remember}
             onChange={handleChange}
           />
           Запомнить вход где-то на 1 месяц
         </p>
-        {errors.remmember && <p className="authForm_error">{errors.remmember}</p>}
+        {errors.remember && <p className="authForm_error">{errors.remember}</p>}
 
         <p className="authForm_row authForm_row--noBorder">
           <button type="submit">Войти</button>

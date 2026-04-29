@@ -16,6 +16,7 @@ if (!$input || !isset($input['username']) || !isset($input['password'])) {
 
 $username = trim($input['username']);
 $password = $input['password'];
+$remember = !empty($input['remember']);
 
 try {
   require_once __DIR__ . '/../../config/database.php';
@@ -48,10 +49,10 @@ try {
   $_SESSION['user_id'] = $user['id'];
   $_SESSION['username'] = $user['username'];
   
-  // Вариант 2: JWT токен (более современно для SPA)
-  // Здесь можно сгенерировать JWT
-  
-  // Убираем пароль из ответа
+  if ($remember) {
+    setcookie(session_name(), session_id(), time() + 60*60*24*30, "/", "", false, true);
+  }
+
   unset($user['user_password_hash']);
   
   echo json_encode([
