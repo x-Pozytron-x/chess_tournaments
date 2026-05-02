@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Credentials: true");
-
+ 
 $input = json_decode(file_get_contents('php://input'), true);
 
 if (!$input || !isset($input['username']) || !isset($input['password'])) {
@@ -45,10 +45,8 @@ try {
   }
     
   // Вариант 1: Используем PHP сессии (проще)
-  session_start();
-  $_SESSION['user_id'] = $user['id'];
-  $_SESSION['username'] = $user['username'];
-  
+  $_SESSION['user_id'] = $user['user_id'];
+  $_SESSION['username'] = $user['user_name'];
   if ($remember) {
     setcookie(session_name(), session_id(), time() + 60*60*24*30, "/", "", false, true);
   }

@@ -33,6 +33,7 @@ export const Login: FC = () => {
   const user = useAuthStore(s => s.user)
   const error = useAuthStore(s => s.error)
 
+  console.log(user)
 
   const [errors, setErrors] = useState<Errors>({});
   const [fields, setFields] = useState<LoginFields>({

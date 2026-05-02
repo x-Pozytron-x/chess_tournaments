@@ -5,6 +5,7 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
+session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
   http_response_code(200);
   exit;
@@ -28,7 +29,7 @@ if ($method === 'GET') {
 }
 if ($method === 'GET') {
   if ($path === 'api/me') {
-   require_once __DIR__ . '/api/me.php';
+   require_once __DIR__ . '/api/auth/me.php';
     exit;
   }
 }

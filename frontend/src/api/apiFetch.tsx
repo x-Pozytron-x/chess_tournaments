@@ -9,7 +9,10 @@ export async function apiFetch<T>(
   let res: Response
 
   try {
-    res = await fetch(url, options)
+    res = await fetch(url, {
+      ...options,
+      credentials: 'include'
+    })
   } catch {
     throw new ApiError('NETWORK_ERROR')
   }
