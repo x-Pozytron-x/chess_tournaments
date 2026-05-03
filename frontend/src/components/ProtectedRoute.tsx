@@ -1,18 +1,23 @@
-import { Navigate, useInRouterContext } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import type { ReactNode } from 'react'
 
-type Props = {
-  children: ReactNode
-}
-
-export const ProtectedRoute = ({ children }: Props) => {
+export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const user = useAuthStore(s => s.user)
   const isLoading = useAuthStore(s => s.isLoading)
+  const isAuthChecked = useAuthStore(s => s.isAuthChecked)
 
-  if (isLoading) return <div>Loading...</div>
+  if (!isAuthChecked) return null
 
-  if (!user) return <Navigate to="/login" />
+  // 🟡 ЖДЁМ проверки
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
+  // 🔴 НЕ авторизован
+  if (!user) {
+    return <Navigate to="/login" />
+  }
+
+  // 🟢 авторизован
   return children
 }

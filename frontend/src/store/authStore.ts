@@ -6,6 +6,7 @@ import { ApiError } from '../api/apiError'
 type AuthState = {
   user: User | null
   isLoading: boolean
+  isAuthChecked: boolean
   error: string | null
 
   login: (data: {
@@ -22,6 +23,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isLoading: false,
   error: null,
+  isAuthChecked: false,
 
   login: async (data) => {
     set({ isLoading: true, error: null })
@@ -40,11 +42,15 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   checkAuth: async () => {
+    set({ isLoading: true })
+
     try {
       const user = await me()
       set({ user })
     } catch {
       set({ user: null })
+    } finally {
+      set({ isLoading: false, isAuthChecked: true })
     }
   },
 
