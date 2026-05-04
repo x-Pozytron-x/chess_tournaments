@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { AdminRoute } from './components/AdminRoute'
 import { useAuthStore } from './store/authStore'
 
 import './index.css'
@@ -15,6 +16,8 @@ import { About } from "./pages/About";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
+import { AdminPage } from "./pages/Admin";
+
 
 type AppRoute = {
   path: string
@@ -58,6 +61,14 @@ export const App = () => {
             />
           )
         })}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminPage />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )

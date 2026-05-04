@@ -36,14 +36,15 @@ export const Header = () => {
           <span>...</span>
         ) : user ? (
           <>
-            <span>👤 {user.user_name}</span>
-            <Link to="/profile">Профиль</Link>
+            <span>Hi, {user.user_name}</span>
+            <Link to="/profile">👤</Link>
+            <Link to="/settings">⚙️</Link>
 
             {isAdmin && (
-              <Link to="/admin">⚙ Админка</Link>
+              <Link to="/admin">🤖</Link>
             )}
 
-            <button onClick={handleLogout}>Выйти</button>
+            <button onClick={handleLogout}>⏻</button>
           </>
         ) : (
           <>

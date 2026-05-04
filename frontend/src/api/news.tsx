@@ -41,10 +41,10 @@ async function apiFetch<T>(url: string, options?: RequestInit): Promise<T> {
 
 // api/news.ts
 export async function getNews(): Promise<News[]> {
-  return apiFetch<News[]>('/api/news.php')
+  return apiFetch<News[]>('/api/news')
 }
 
 // И так же легко добавлять новые эндпоинты:
 export async function getNewsById(id: number): Promise<News> {
-  return apiFetch<News>(`/api/news.php?id=${id}`)
+  return apiFetch<News>(`/api/new/id=${id}`)
 }

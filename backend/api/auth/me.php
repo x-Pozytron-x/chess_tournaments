@@ -13,7 +13,7 @@ unset($user['user_password_hash']);
 
 
 $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_fullname, user_role
-  FROM tbl_users
+  FROM chess_users
   WHERE user_id = :user_id
   LIMIT 1
 ");

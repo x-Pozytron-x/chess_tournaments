@@ -22,7 +22,7 @@ try {
   require_once __DIR__ . '/../../config/database.php';
   $db = Database::getInstance();
   
-  $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_password_hash, user_fullname, user_role FROM tbl_users WHERE (user_name = :username) AND is_active = TRUE");
+  $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_password_hash, user_fullname, user_role FROM chess_users WHERE (user_name = :username) AND is_active = TRUE");
   $stmt->execute([':username' => $username]);
   $user = $stmt->fetch(PDO::FETCH_ASSOC);
     

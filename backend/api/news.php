@@ -8,7 +8,7 @@ try {
   require_once __DIR__ . '/../config/database.php';
   $db = Database::getInstance();
   
-  $stmt = $db->prepare("SELECT * FROM tbl_news");
+  $stmt = $db->prepare("SELECT * FROM chess_news");
   $stmt->execute();
   $projects = $stmt->fetchAll();
 

@@ -65,7 +65,7 @@ try {
     // }
 
     // Проверяем уникальность никнейма
-    $stmt = $db->prepare("SELECT user_id FROM tbl_users WHERE user_name = :login");
+    $stmt = $db->prepare("SELECT user_id FROM chess_users WHERE user_name = :login");
     $stmt->execute([':login' => $login]);
     if ($stmt->fetch()) {
         http_response_code(422);
@@ -80,7 +80,7 @@ try {
 
     // Вставляем только то что знаем — остальное по DEFAULT из схемы
     $stmt = $db->prepare("
-        INSERT INTO tbl_users (user_name, user_email, user_password_hash, is_active)
+        INSERT INTO chess_users (user_name, user_email, user_password_hash, is_active)
         VALUES (:user_name, :user_email, :user_password_hash, 0)
     ");
     $stmt->execute([
