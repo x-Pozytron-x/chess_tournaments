@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { User } from '../types/User'
+import { Role } from '../types/User'
 import { login, me, logout } from '../api/auth'
 import { ApiError } from '../api/apiError'
 
@@ -62,6 +63,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   isAdmin: () => {
     const u = get().user
-    return !!u && u.user_role === 1
+    return !!u && u.user_role === Role.ADMIN
   },
 }))

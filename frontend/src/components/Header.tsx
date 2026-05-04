@@ -15,14 +15,9 @@ export const Header = () => {
 
   const handleLogout = async () => {
     await logout()
+    navigate('/login')
   }
 
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    }
-  }, [user])
   return (
 
     <header className='header'>

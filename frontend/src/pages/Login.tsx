@@ -17,13 +17,6 @@ interface LoginFields {
   remember: boolean;
 }
 
-// interface User {
-//   user_id: number,
-//   user_name: string,
-//   user_email: string,
-//   user_fullname: string,
-//   user_role: number
-// }
 type Errors = Partial<Record<keyof LoginFields, string>>;
 
 export const Login: FC = () => {
@@ -33,7 +26,7 @@ export const Login: FC = () => {
   const user = useAuthStore(s => s.user)
   const error = useAuthStore(s => s.error)
 
-  console.log(user)
+  // console.log(user)
 
   const [errors, setErrors] = useState<Errors>({});
   const [fields, setFields] = useState<LoginFields>({
