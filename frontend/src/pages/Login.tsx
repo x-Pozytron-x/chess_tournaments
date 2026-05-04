@@ -17,13 +17,13 @@ interface LoginFields {
   remember: boolean;
 }
 
-interface User {
-  user_id: number,
-  user_name: string,
-  user_email: string,
-  user_fullname: string,
-  user_role: number
-}
+// interface User {
+//   user_id: number,
+//   user_name: string,
+//   user_email: string,
+//   user_fullname: string,
+//   user_role: number
+// }
 type Errors = Partial<Record<keyof LoginFields, string>>;
 
 export const Login: FC = () => {

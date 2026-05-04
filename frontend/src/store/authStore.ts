@@ -8,6 +8,7 @@ type AuthState = {
   isLoading: boolean
   isAuthChecked: boolean
   error: string | null
+  isAdmin: () => boolean
 
   login: (data: {
     username: string
@@ -19,7 +20,7 @@ type AuthState = {
   logout: () => Promise<void>
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   isLoading: false,
   error: null,
@@ -57,5 +58,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     await logout()
     set({ user: null })
+  },
+
+  isAdmin: () => {
+    const u = get().user
+    return !!u && u.user_role === 1
   },
 }))

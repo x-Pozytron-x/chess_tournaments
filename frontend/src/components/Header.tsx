@@ -1,7 +1,28 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
+import { useEffect } from 'react';
+
+
 import './Header.css';
 import logotype from '../assets/logo.png';
+
 export const Header = () => {
+  const navigate = useNavigate()
+  const user = useAuthStore(s => s.user)
+  const isLoading = useAuthStore(s => s.isLoading)
+  const isAdmin = useAuthStore(s => s.isAdmin())
+  const logout = useAuthStore(s => s.logout)
+
+  const handleLogout = async () => {
+    await logout()
+  }
+
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login')
+    }
+  }, [user])
   return (
 
     <header className='header'>
@@ -9,12 +30,37 @@ export const Header = () => {
         <img src={logotype} alt="" width="70px" />
         <span>CyberChess</span>
       </Link>
+
       <nav className='nav'>
+        {isLoading ? (
+          <span>...</span>
+        ) : user ? (
+          <>
+            <span>👤 {user.user_name}</span>
+            <Link to="/profile">Профиль</Link>
+
+            {isAdmin && (
+              <Link to="/admin">⚙ Админка</Link>
+            )}
+
+            <button onClick={handleLogout}>Выйти</button>
+          </>
+        ) : (
+          <>
+            <Link to="/contacts">Контакты</Link>
+            <Link to="/about">О сайте</Link>
+            <Link to="/register" className='register'>Регистрация</Link>
+            <Link to="/login" className='login'>Вход</Link>
+          </>
+        )}
+
+      </nav>
+      {/* <nav className='nav'>
         <Link to="/contacts">Контакты</Link>
         <Link to="/about">О сайте</Link>
         <Link to="/register" className='register'>Регистрация</Link>
         <Link to="/login" className='login'>Вход</Link>
-      </nav>
+      </nav> */}
     </header>
   )
 
