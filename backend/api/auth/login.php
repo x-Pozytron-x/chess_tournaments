@@ -1,15 +1,12 @@
 <?php
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Credentials: true");
  
 $input = json_decode(file_get_contents('php://input'), true);
 
 if (!$input || !isset($input['username']) || !isset($input['password'])) {
     http_response_code(400);
     echo json_encode([
-        'success' => false,
-        'errorCode' => 'EMPTY_FIELD'
+      'success' => false,
+      'errorCode' => 'EMPTY_FIELD'
     ]);
     exit;
 }
@@ -39,7 +36,7 @@ try {
     http_response_code(401);
     echo json_encode([
       'success' => false,
-      'errorCode' => 'INVALID_PASSWORD'
+      'errorCode' => 'UNKNOWN_USER2'
     ]);
     exit;
   }

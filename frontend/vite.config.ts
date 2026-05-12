@@ -5,11 +5,21 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: true, // Чтобы Vite был виден извне контейнера
+    port: 5173, strictPort: true,
+    allowedHosts: [
+      'chess.loc'
+    ],
     proxy: {
       '/api': {
-        target: 'http://api.chess.loc',
-        changeOrigin: true
-      }
-    }
-  }
+        target: 'http://chess_back', // Имя сервиса из docker-compose
+        changeOrigin: true,
+        // Если в папке backend файлы лежат сразу (без папки api), оставляем rewrite:
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+    watch: {
+      usePolling: true, // Обязательно для WSL! Иначе правки кода не будут подхватываться сразу
+    },
+  },
 })

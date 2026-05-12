@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
   echo json_encode(['success' => false, 'errorCode' => 'UNAUTHORIZED']);
   exit;
 }
-unset($user['user_password_hash']);
+// unset($user['user_password_hash']);
 
 
 $stmt = $db->prepare("SELECT user_id, user_name, user_email, user_fullname, user_role
