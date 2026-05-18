@@ -1,0 +1,31 @@
+.admin_wrap {
+  margin-top: 15px;
+  padding: 0 10px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.admin_menu {
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  background: rgba(22, 27, 34, 0.8);
+}
+
+.admin_menu ul li {
+  padding: 3px 5px;
+  list-style-type: none;
+  border-radius: 2px;
+}
+
+.admin_main {
+  width: calc(100% - 220px);
+}
+
+.admin_content {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(22, 27, 34, 0.8);
+}
