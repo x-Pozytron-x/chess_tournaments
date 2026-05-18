@@ -19,8 +19,8 @@
 }
 
 .logo {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   gap: 0.75rem;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .logo span {
-   color: white;
+  color: white;
   font-weight: 700;
   font-size: 1.2rem;
   letter-spacing: -0.5px;
@@ -47,46 +47,57 @@
 }
 
 .nav {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
 }
 
-.nav a {
+.nav a,
+.nav button {
+  box-sizing: border-box;
+  border: 1px rgb(44, 160, 214) solid;
   color: #8b949e;
   text-decoration: none;
-  padding: 0.5rem;
+  padding: 4px;
   border-radius: 100px;
   font-weight: 500;
   transition: all 0.2s ease;
   position: relative;
-  font-size: 14px;
+  font-size: 18px;
+  width: 35px;
+  height: 35px;
+  line-height: 25px;
+  text-align: center;
+  background: none;
+  cursor: pointer;
+  transition: .3s;
 }
 
-.nav a:hover {
-  color: #ffd700;
-  background-color: rgba(255,215,0,0.1);
+.nav a:hover,
+.nav button:hover {
+  transform: scale(1.04);
+  border-color: #bb64eeda;
 }
 
 .separ {
-  width: 1px; 
-  height: 24px; 
-  background: rgba(255,255,255,0.1); 
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
   margin: 0 0.5rem;
 }
 
 .nav .register {
-    color: #8b949e;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+  color: #8b949e;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .nav .register:hover {
-    color: #ffd700;
-    background: rgba(255, 215, 0, 0.1);
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.1);
 }
 
 .nav .login {
@@ -97,11 +108,11 @@
   border-radius: 100px;
   font-weight: 600;
   transition: all 0.2s ease;
-  border: 1px solid rgba(255,215,0,0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .nav .login:hover {
   color: #0a0c0f;
   transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255,215,0,0.3);
+  box-shadow: 0 8px 16px rgba(255, 215, 0, 0.3);
 }

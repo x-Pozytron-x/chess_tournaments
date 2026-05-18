@@ -32,7 +32,7 @@ export const AdminPage = () => {
 
 
       <section className='admin_main'>
-        <div className='admin_breadcrumb'>Adminka &gt; </div>
+        <div className='admin_breadcrumb'>Adminka &gt; Dashboard</div>
 
 
 
