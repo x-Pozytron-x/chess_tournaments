@@ -1,16 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-
-import { getNews } from '../api/news.tsx'
-import type { News } from '../types/News'
+import { Link } from 'react-router-dom'
 
 import { getDashboard } from '../api/dashboard'
 import type { DashboardData } from '../types/dashboard'
 import './Admin.css';
 
 export const AdminPage = () => {
-  // const [news, setNews] = useState<News[]>([]);
-  // const [loading, setLoading] = useState(true)
   const [dashboard, setDashboard] = useState<DashboardData | null>(null)
 
 
@@ -27,15 +22,6 @@ export const AdminPage = () => {
     load()
   }, [])
 
-  // useEffect(() => {
-  //   getNews()
-  //     .then(setNews)
-  //     .catch(console.error)
-  //     .finally(() => setLoading(false))
-  // }, [])
-  // if (loading) return <div>Загрузка...</div>
-
-  console.log(dashboard?.activeTournaments.length)
   return (
     <div className='admin_wrap'>
       <aside className='admin_menu'>

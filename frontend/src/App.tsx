@@ -17,6 +17,7 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
 import { AdminPage } from "./pages/Admin";
+import { AdminNews } from "./pages/AdminNews";
 
 
 type AppRoute = {
@@ -66,6 +67,14 @@ export const App = () => {
           element={
             <AdminRoute>
               <AdminPage />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/news"
+          element={
+            <AdminRoute>
+              <AdminNews />
             </AdminRoute>
           }
         />
