@@ -56,6 +56,13 @@ if ($method === 'GET') {
     exit;
   }
 }
+if ($method === 'POST') {
+  if ($path === 'admin/news') {
+    $cmd = 'news_add';
+    require_once __DIR__ . '/api/admin/news.php';
+    exit;
+  }
+}
 if ($method === 'GET') {
   if ($path === 'admin/dashboard') {
     require_once __DIR__ . '/api/admin/dashboard.php';

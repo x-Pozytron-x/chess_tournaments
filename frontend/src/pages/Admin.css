@@ -50,3 +50,40 @@
   border-radius: 10px;
   background: rgba(22, 27, 34, 0.8);
 }
+
+/* modal */
+.modal_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal_window {
+  width: 500px;
+  background: #252525;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #3a3a3a;
+}
+
+.modal_window input,
+.modal_window textarea {
+  width: 100%;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.modal_actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

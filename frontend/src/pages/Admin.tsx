@@ -26,7 +26,7 @@ export const AdminPage = () => {
     <div className='admin_wrap'>
       <aside className='admin_menu'>
         <ul>
-          <Link to='/admin' className="active">Dashboard</Link>
+          <Link to='#' className="active">Dashboard</Link>
           <Link to='news'>News</Link>
           <Link to='players'>Players</Link>
           <Link to='tournaments'>Tournaments</Link>
