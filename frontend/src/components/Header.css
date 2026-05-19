@@ -49,32 +49,36 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 5px;
 }
 
-.nav a,
-.nav button {
+.nav_a,
+.nav_c {
   box-sizing: border-box;
-  border: 1px rgb(44, 160, 214) solid;
   color: #8b949e;
   text-decoration: none;
-  padding: 4px;
+  padding: 3px;
   border-radius: 100px;
   font-weight: 500;
   transition: all 0.2s ease;
   position: relative;
-  font-size: 18px;
-  width: 35px;
-  height: 35px;
-  line-height: 25px;
   text-align: center;
+  font-size: 15px;
   background: none;
   cursor: pointer;
   transition: .3s;
 }
 
-.nav a:hover,
-.nav button:hover {
+.nav_c {
+  border: 1px rgb(44, 160, 214) solid;
+  width: 35px;
+  height: 35px;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+/* .nav_a:hover, */
+.nav_c:hover {
   transform: scale(1.04);
   border-color: #bb64eeda;
 }

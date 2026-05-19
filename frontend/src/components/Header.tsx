@@ -32,21 +32,21 @@ export const Header = () => {
         ) : user ? (
           <>
             <span>Hi, {user.user_name}</span>
-            <Link to="/profile">👤</Link>
-            <Link to="/settings">⚙️</Link>
+            <Link to="/profile" className='nav_c'>👤</Link>
+            <Link to="/settings" className='nav_c'>⚙️</Link>
 
             {isAdmin && (
-              <Link to="/admin">🤖</Link>
+              <Link to="/admin" className='nav_c'>🤖</Link>
             )}
 
-            <button onClick={handleLogout}>⏻</button>
+            <button onClick={handleLogout} className='nav_c'>⏻</button>
           </>
         ) : (
           <>
-            <Link to="/contacts">Контакты</Link>
-            <Link to="/about">О сайте</Link>
-            <Link to="/register" className='register'>Регистрация</Link>
-            <Link to="/login" className='login'>Вход</Link>
+            <Link to="/contacts" className='nav_a'>Контакты</Link>
+            <Link to="/about" className='nav_a'>О сайте</Link>
+            <Link to="/register" className='nav_a register'>Регистрация</Link>
+            <Link to="/login" className='nav_a login'>Вход</Link>
           </>
         )}
 

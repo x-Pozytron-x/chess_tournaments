@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
 
 import { getNews } from '../api/news.tsx'
 import type { News } from '../types/News'
@@ -22,19 +23,17 @@ export const AdminPage = () => {
     <div className='admin_wrap'>
       <aside className='admin_menu'>
         <ul>
-          <li style={{ borderRight: '4px solid #8ab4f8', padding: '3px 8px', background: 'rgba(0,0,0,.3) ' }}>Dashboard</li>
-          <li>News</li>
-          <li>Players</li>
-          <li>Tournaments</li>
-          <li>Settings</li>
+          <Link to='admin' className="active">Dashboard</Link>
+          <Link to='admin/news'>News</Link>
+          <Link to='admin/players'>Players</Link>
+          <Link to='admin/tournaments'>Tournaments</Link>
+          <Link to='admin/settings'>Settings</Link>
         </ul>
       </aside>
 
 
       <section className='admin_main'>
         <div className='admin_breadcrumb'>Adminka &gt; Dashboard</div>
-
-
 
 
         <div className='admin_content'>
