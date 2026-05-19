@@ -144,7 +144,7 @@ export function Home() {
                   <li className="news-item" key={p.news_id}>
                     <h4> {p.news_title}</h4>
                     <p>{p.news_descr}</p>
-                    <span className="news-date">1999 99 99</span>
+                    <span className="news-date">{p.news_date}</span>
                   </li>
                 ))}
               </ul>
@@ -163,7 +163,7 @@ export function Home() {
                   <li className="news-item" key={p.news_id}>
                     <h4> {p.news_title}</h4>
                     <p>{p.news_descr}</p>
-                    <span className="news-date">1999 99 99</span>
+                    <span className="news-date">{p.news_date}</span>
                   </li>
                 ))}
               </ul>

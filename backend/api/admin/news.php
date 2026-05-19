@@ -80,22 +80,19 @@ if ($method === 'POST' && $cmd === 'news_add') {
       INSERT INTO chess_news (
         news_title,
         news_descr,
-        news_status,
-        news_date
+        news_status
       )
       VALUES (
         :title,
         :text,
-        :status,
-        :date
+        :status
       )
     ");
 
     $stmt->execute([
       ':title' => $title,
       ':text'  => $text,
-      ':status' => '0',
-      ':date' => "00.00.0000"
+      ':status' => '0'
     ]);
     echo json_encode([
       'success' => true
