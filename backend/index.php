@@ -56,6 +56,12 @@ if ($method === 'GET') {
     exit;
   }
 }
+if ($method === 'GET') {
+  if ($path === 'admin/dashboard') {
+    require_once __DIR__ . '/api/admin/dashboard.php';
+    exit;
+  }
+}
 
 http_response_code(404);
 echo json_encode([
