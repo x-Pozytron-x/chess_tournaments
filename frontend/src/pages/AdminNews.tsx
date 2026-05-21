@@ -11,8 +11,10 @@ export const AdminNews: FC = () => {
   const [news, setNews] = useState<News[]>([]);
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedNews, setSelectedNews] = useState<News | null>(null)
 
   const [fields, setFields] = useState({
+    news_id: '',
     title: '',
     text: '',
     status: false
@@ -33,7 +35,7 @@ export const AdminNews: FC = () => {
   }, [])
   if (loading) return <div>Загрузка...</div>
 
-  async function handleSave() {
+  async function handleAdd() {
     try {
       await apiFetch('/api/admin/news', {
         method: 'POST',
@@ -42,12 +44,76 @@ export const AdminNews: FC = () => {
         },
         body: JSON.stringify(fields)
       })
+
+      //done  and clear fields
       setIsModalOpen(false)
       setFields({
+        news_id: '',
         title: '',
         text: '',
         status: false
       })
+
+      // get news and rerender
+      getNews()
+        .then(setNews)
+        .catch(console.error)
+        .finally(() => setLoading(false))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  async function handleSave() {
+    try {
+      await apiFetch('/api/admin/news', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fields)
+      })
+
+      //done  and clear fields
+      setIsModalOpen(false)
+      setFields({
+        news_id: '',
+        title: '',
+        text: '',
+        status: false
+      })
+
+      // get news and rerender
+      getNews()
+        .then(setNews)
+        .catch(console.error)
+        .finally(() => setLoading(false))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+  async function handleDelete() {
+    try {
+      await apiFetch('/api/admin/news', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fields)
+      })
+
+      //done  and clear fields
+      setIsModalOpen(false)
+      setFields({
+        news_id: '',
+        title: '',
+        text: '',
+        status: false
+      })
+
+      // get news and rerender
       getNews()
         .then(setNews)
         .catch(console.error)
@@ -74,7 +140,20 @@ export const AdminNews: FC = () => {
         <div className='admin_breadcrumb'>Adminka &gt; News</div>
 
         <div className='admin_content'>
-          <button style={{ width: '25px', height: '25px', cursor: 'pointer' }} onClick={() => setIsModalOpen(true)}> + </button>
+
+          <button style={{ width: '25px', height: '25px', cursor: 'pointer' }}
+            onClick={() => {
+              setSelectedNews(null)
+              setFields({
+                news_id: '',
+                title: '',
+                text: '',
+                status: false
+              })
+              setIsModalOpen(true)
+            }}
+          > + </button>
+
           <div className='borderRadius' style={{ borderRadius: '12px', background: '#252525', display: 'block', padding: '15px', margin: '10px 5px' }}>
             <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
               <span> ♟ News:</span>
@@ -82,8 +161,23 @@ export const AdminNews: FC = () => {
             {news.length ? (
               news.map(n => (
                 n.news_status ? ('') : (
-                  <div className="admin_news_item" style={{ display: 'block', cursor: 'pointer' }} key={n.news_id}>
+                  <div
+                    onClick={() => {
+                      setSelectedNews(n)
+                      setFields({
+                        news_id: n.news_id,
+                        title: n.news_title,
+                        text: n.news_descr,
+                        status: n.news_status
+                      })
+                      setIsModalOpen(true)
+                    }}
+                    className="admin_news_item"
+                    style={{ display: 'block', cursor: 'pointer' }}
+                    key={n.news_id} >
+
                     <span>{n.news_date} - {n.news_title}</span>
+
                   </div>
                 )
               ))
@@ -98,7 +192,18 @@ export const AdminNews: FC = () => {
             {news.length ? (
               news.map(n => (
                 n.news_status ? (
-                  <div className="admin_news_item" style={{ display: 'block', cursor: 'pointer' }} key={n.news_id}>
+                  <div
+                    onClick={() => {
+                      setSelectedNews(n)
+                      setFields({
+                        news_id: n.news_id,
+                        title: n.news_title,
+                        text: n.news_descr,
+                        status: n.news_status
+                      })
+                      setIsModalOpen(true)
+                    }}
+                    className="admin_news_item" style={{ display: 'block', cursor: 'pointer' }} key={n.news_id}>
                     <span>{n.news_date} - {n.news_title}</span>
                   </div>
                 ) : ('')
@@ -115,6 +220,7 @@ export const AdminNews: FC = () => {
         <div className="modal_overlay" >
           <div className="modal_window">
             <h3>Add news</h3>
+            {fields.status}
             <input
               className='modal_window_inputT'
               name="title"
@@ -135,7 +241,21 @@ export const AdminNews: FC = () => {
             </label>
 
             <div className="modal_actions">
-              <button onClick={handleSave}>Save</button>
+
+              {!selectedNews && (
+                <button onClick={handleAdd}>Add</button>
+              )}
+
+
+              {selectedNews && (
+                <>
+                  <button onClick={handleSave}>Save</button>
+                  <button onClick={handleDelete}>
+                    Delete
+                  </button>
+                </>
+              )}
+
               <button onClick={() => setIsModalOpen(false)}>
                 Cancel
               </button>

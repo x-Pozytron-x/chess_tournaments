@@ -63,6 +63,20 @@ if ($method === 'POST') {
     exit;
   }
 }
+if ($method === 'PUT') {
+  if ($path === 'admin/news') {
+    $cmd = 'news_save';
+    require_once __DIR__ . '/api/admin/news.php';
+    exit;
+  }
+}
+if ($method === 'DELETE') {
+  if ($path === 'admin/news') {
+    $cmd = 'news_delete';
+    require_once __DIR__ . '/api/admin/news.php';
+    exit;
+  }
+}
 if ($method === 'GET') {
   if ($path === 'admin/dashboard') {
     require_once __DIR__ . '/api/admin/dashboard.php';

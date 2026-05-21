@@ -60,7 +60,7 @@ if ($method === 'POST' && $cmd === 'news_add') {
 
   $title = trim($input['title'] ?? '');
   $text  = trim($input['text'] ?? '');
-  $status  = trim($input['status'] ?? '');
+  $status = $input['status'] === false ? 0 : 1 ;
 
   if ($title === '' || $text === '') {
     http_response_code(400);
@@ -104,6 +104,58 @@ if ($method === 'POST' && $cmd === 'news_add') {
     echo json_encode([
       'success' => false,
       'errorCode' => 'SERVER_ERROR'
+    ]);
+  }
+  exit;
+}
+
+if ($method === 'PUT' && $cmd === 'news_save') {
+
+  $input = json_decode(file_get_contents('php://input'), true);
+
+  $news_id = $input['news_id'] ;
+  $title = trim($input['title'] ?? '');
+  $text  = trim($input['text'] ?? '');
+  $status = $input['status'] === false ? 0 : 1 ;
+
+
+  if ($title === '' || $text === '') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'errorCode' => 'VALIDATION']);
+    exit;
+  }
+  if (mb_strlen($title) > 150) {
+    http_response_code(400);
+    echo json_encode([
+      'success' => false,
+      'errorCode' => 'TITLE_TOO_LONG'
+    ]);
+    exit;
+  }
+
+  try {
+    $stmt = $db->prepare("
+      UPDATE chess_news
+      SET news_title = :title, news_descr = :text, news_status = :status
+      WHERE news_id = :news_id
+    ");
+
+    $stmt->execute([
+      ':news_id' => $news_id,
+      ':title' => $title,
+      ':text'  => $text,
+      ':status' => $status
+    ]);
+    echo json_encode([
+      'success' => true
+    ]);
+
+  } catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode([
+      'success' => false,
+      'errorCode' => 'SERVER_ERROR',
+      'e' => $e
     ]);
   }
   exit;
