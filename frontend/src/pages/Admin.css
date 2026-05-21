@@ -51,6 +51,18 @@
   background: rgba(22, 27, 34, 0.8);
 }
 
+.admin_news_item {
+  margin-top: 4px;
+  cursor: pointer;
+  color: #c7f1ff;
+  font-size: 14px;
+  transition: .3;
+}
+
+.admin_news_item:hover {
+  color: #dbc7ff;
+}
+
 /* modal */
 .modal_overlay {
   position: fixed;
@@ -70,8 +82,7 @@
   border: 1px solid #3a3a3a;
 }
 
-.modal_window input,
-.modal_window textarea {
+.modal_window_inputT {
   width: 100%;
   background: #1e1e1e;
   border: 1px solid #444;

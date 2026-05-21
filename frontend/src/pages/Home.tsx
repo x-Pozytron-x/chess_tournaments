@@ -141,12 +141,15 @@ export function Home() {
               </h3>
               <ul className="news-list">
                 {news.map(p => (
-                  <li className="news-item" key={p.news_id}>
-                    <h4> {p.news_title}</h4>
-                    <p>{p.news_descr}</p>
-                    <span className="news-date">{p.news_date}</span>
-                  </li>
-                ))}
+                  p.news_status ? ('') : (
+                    < li className="news-item" key={p.news_id} >
+                      <h4> {p.news_title}</h4>
+                      <p>{p.news_descr}</p>
+                      <span className="news-date">{p.news_date}</span>
+                    </li>
+                  ))
+                )
+                }
               </ul>
               <Link to="/news" className="action-link">
                 Все новости →
@@ -160,12 +163,16 @@ export function Home() {
               </h3>
               <ul className="plans-list">
                 {news.map(p => (
-                  <li className="news-item" key={p.news_id}>
-                    <h4> {p.news_title}</h4>
-                    <p>{p.news_descr}</p>
-                    <span className="news-date">{p.news_date}</span>
-                  </li>
-                ))}
+                  p.news_status ? (
+                    <li className="news-item" key={p.news_id}>
+                      <h4> {p.news_title}</h4>
+                      <p>{p.news_descr}</p>
+                      <span className="news-date">{p.news_date}</span>
+                    </li>
+                  ) : ('')
+                )
+                )
+                }
               </ul>
               <Link to="/feedback" className="action-link">
                 Предложить идею →
@@ -173,40 +180,12 @@ export function Home() {
             </div>
           </div>
 
-          {/* Нижняя навигация */}
-          {/* <div className="bottom-nav">
-            <Link to="/tournaments">Все турниры</Link>
-            <Link to="/about">О проекте</Link>
-          </div> */}
 
           {/* Декоративная доска */}
           <div className="chess-decoration"></div>
         </div>
       </div>
-      {/* 
-      <h1>Добро пожаловать на сайт шахматных турниров!</h1>
 
-      <div>Пройдите простую регистрацию, чтобы принимать участие в турнирах</div> */}
-
-
-      {/* <div className='homeContent'>
-
-        <section>
-          <h2>🔔 Что нового?</h2>
-          <ul>
-            {news.map(p => (
-              <li key={p.news_id}> <h4> {p.news_title}</h4> <p>{p.news_descr}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section>
-          <h2>В планах:</h2>
-        </section>
-
-      </div> */}
-
-    </main>
+    </main >
   )
 }

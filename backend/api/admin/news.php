@@ -60,6 +60,7 @@ if ($method === 'POST' && $cmd === 'news_add') {
 
   $title = trim($input['title'] ?? '');
   $text  = trim($input['text'] ?? '');
+  $status  = trim($input['status'] ?? '');
 
   if ($title === '' || $text === '') {
     http_response_code(400);
@@ -92,7 +93,7 @@ if ($method === 'POST' && $cmd === 'news_add') {
     $stmt->execute([
       ':title' => $title,
       ':text'  => $text,
-      ':status' => '0'
+      ':status' => $status
     ]);
     echo json_encode([
       'success' => true
