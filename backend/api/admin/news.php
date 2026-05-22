@@ -162,6 +162,34 @@ if ($method === 'PUT' && $cmd === 'news_save') {
 }
 
 
+if ($method === 'DELETE') {
+  $input = json_decode(file_get_contents('php://input'), true);
+  $news_id = $input['news_id'] ;
+  try {
+    $stmt = $db->prepare("
+      DELETE 
+      FROM chess_news
+      WHERE news_id = :news_id
+    ");
+    
+    $stmt->execute([
+      ':news_id' => $news_id
+    ]);
+    $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode([
+      'success' => true,
+      'data' => ''
+    ]);
+  } catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode([
+      'success' => false,
+      'errorCode' => 'SERVER_ERROR'
+    ]);
+  }
+  exit;
+}
+
 //     // Вставляем только то что знаем — остальное по DEFAULT из схемы
 //     $stmt = $db->prepare("
 //         INSERT INTO chess_users (user_name, user_email, user_password_hash, is_active)

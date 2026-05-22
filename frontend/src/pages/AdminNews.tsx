@@ -220,7 +220,7 @@ export const AdminNews: FC = () => {
         <div className="modal_overlay" >
           <div className="modal_window">
             <h3>Add news</h3>
-            {fields.status}
+            {fields.news_id}
             <input
               className='modal_window_inputT'
               name="title"
