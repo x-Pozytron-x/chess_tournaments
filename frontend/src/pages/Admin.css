@@ -51,6 +51,27 @@
   background: rgba(22, 27, 34, 0.8);
 }
 
+.button_add {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.admin_section {
+  border-radius: 12px;
+  background: #252525;
+  display: block;
+  padding: 15px;
+  margin: 10px 5px;
+}
+
+.admin_section_title {
+  border-bottom: 2px solid #8ab4f8;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
 .admin_news_item {
   margin-top: 4px;
   cursor: pointer;

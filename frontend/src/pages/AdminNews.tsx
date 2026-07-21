@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
 import type { FC } from 'react';
 
 import { apiFetch } from '../api/apiFetch'
@@ -125,23 +124,12 @@ export const AdminNews: FC = () => {
 
 
   return (
-    <div className='admin_wrap'>
-      <aside className='admin_menu'>
-        <ul>
-          <Link to='/admin' >Dashboard</Link>
-          <Link to='#' className="active">News</Link>
-          <Link to='players'>Players</Link>
-          <Link to='tournaments'>Tournaments</Link>
-          <Link to='settings'>Settings</Link>
-        </ul>
-      </aside>
-
-      <section className='admin_main'>
+    <>
         <div className='admin_breadcrumb'>Adminka &gt; News</div>
 
         <div className='admin_content'>
 
-          <button style={{ width: '25px', height: '25px', cursor: 'pointer' }}
+          <button className='button_add'
             onClick={() => {
               setSelectedNews(null)
               setFields({
@@ -154,8 +142,8 @@ export const AdminNews: FC = () => {
             }}
           > + </button>
 
-          <div className='borderRadius' style={{ borderRadius: '12px', background: '#252525', display: 'block', padding: '15px', margin: '10px 5px' }}>
-            <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+          <div className='admin_section' >
+            <h4 className="admin_section_title">
               <span> ♟ News:</span>
             </h4>
             {news.length ? (
@@ -173,11 +161,8 @@ export const AdminNews: FC = () => {
                       setIsModalOpen(true)
                     }}
                     className="admin_news_item"
-                    style={{ display: 'block', cursor: 'pointer' }}
                     key={n.news_id} >
-
                     <span>{n.news_date} - {n.news_title}</span>
-
                   </div>
                 )
               ))
@@ -185,8 +170,8 @@ export const AdminNews: FC = () => {
             }
           </div>
 
-          <div className='borderRadius' style={{ borderRadius: '12px', background: '#252525', display: 'block', padding: '15px', margin: '10px 5px' }}>
-            <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+          <div className='admin_section'>
+            <h4 className="admin_section_title">
               <span> 🗓️ Plans:</span>
             </h4>
             {news.length ? (
@@ -203,7 +188,7 @@ export const AdminNews: FC = () => {
                       })
                       setIsModalOpen(true)
                     }}
-                    className="admin_news_item" style={{ display: 'block', cursor: 'pointer' }} key={n.news_id}>
+                    className="admin_news_item" key={n.news_id}>
                     <span>{n.news_date} - {n.news_title}</span>
                   </div>
                 ) : ('')
@@ -213,8 +198,6 @@ export const AdminNews: FC = () => {
           </div>
 
         </div>
-      </section>
-
 
       {isModalOpen && (
         <div className="modal_overlay" >
@@ -263,8 +246,6 @@ export const AdminNews: FC = () => {
           </div>
         </div>
       )}
-
-
-    </div>
+    </>
   )
 }

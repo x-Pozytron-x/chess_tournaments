@@ -2,8 +2,15 @@ export type User = {
   user_id: number,
   user_name: string,
   user_email: string,
-  user_fullname: string,
-  user_role: number
+  user_fullname: string | null,
+  user_avatar: string | null,
+  user_rating: number,
+  user_telegram: string | null,
+  user_chesscom: string | null,
+  user_lichess: string | null,
+  user_role: number,
+  is_active: number,
+  created_at: string,
 }
 
 export const Role = {

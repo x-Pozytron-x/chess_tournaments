@@ -140,7 +140,15 @@ export function Home() {
                 <span>📰</span> Новости
               </h3>
               <ul className="news-list">
-                {news.map(p => (
+                {news.sort((a, b) => {
+                  if (a.news_date > b.news_date) {
+                    return -1;
+                  }
+                  if (a.news_date < b.news_date) {
+                    return 1;
+                  }
+                  return 0;
+                }).map(p => (
                   p.news_status ? ('') : (
                     < li className="news-item" key={p.news_id} >
                       <h4> {p.news_title}</h4>

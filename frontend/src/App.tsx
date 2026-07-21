@@ -16,8 +16,10 @@ import { About } from "./pages/About";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
+import { AdminLayout } from "./pages/AdminLayout";
 import { AdminPage } from "./pages/Admin";
 import { AdminNews } from "./pages/AdminNews";
+import { AdminUsers } from "./pages/AdminUsers";
 
 
 type AppRoute = {
@@ -66,18 +68,14 @@ export const App = () => {
           path="/admin"
           element={
             <AdminRoute>
-              <AdminPage />
+              <AdminLayout />
             </AdminRoute>
           }
-        />
-        <Route
-          path="/admin/news"
-          element={
-            <AdminRoute>
-              <AdminNews />
-            </AdminRoute>
-          }
-        />
+        >
+          <Route index element={<AdminPage />} />
+          <Route path="news" element={<AdminNews />} />
+          <Route path="users" element={<AdminUsers />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
