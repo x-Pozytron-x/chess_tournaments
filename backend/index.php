@@ -1,9 +1,10 @@
 <?php
 
-// header("Access-Control-Allow-Origin: http://localhost:5173");
-// header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-// header("Access-Control-Allow-Headers: Content-Type, Authorization");
-// header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
 
 $isProd = (false) ? "api/" : "";
 
@@ -84,6 +85,20 @@ if ($method === 'DELETE') {
 if ($method === 'GET') {
   if ($path === $isProd . 'admin/dashboard') {
     require_once __DIR__ . '/api/admin/dashboard.php';
+    exit;
+  }
+}
+
+// admin user roles
+if ($method === 'GET') {
+  if ($path === $isProd . 'admin/roles') {
+    require_once __DIR__ . '/api/admin/roles.php';
+    exit;
+  }
+}
+if ($method === 'PUT') {
+  if ($path === $isProd . 'admin/users/roles') {
+    require_once __DIR__ . '/api/admin/user_roles.php';
     exit;
   }
 }

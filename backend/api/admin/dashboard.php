@@ -1,9 +1,10 @@
 <?php
 
+require_once __DIR__ . '/../../lib/permissions.php';
 require_once __DIR__ . '/../../config/database.php';
 $db = Database::getInstance();
 
-// requireAdmin($db);
+requireAdmin($db);
 
 // Users count
 $stmt = $db->query("

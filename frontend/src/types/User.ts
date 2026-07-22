@@ -1,3 +1,9 @@
+export type RoleItem = {
+  role_id: number
+  role_name: string
+  description: string | null
+}
+
 export type User = {
   user_id: number,
   user_name: string,
@@ -11,6 +17,8 @@ export type User = {
   user_role: number,
   is_active: number,
   created_at: string,
+  roles: RoleItem[],
+  permissions: string[],
 }
 
 export const Role = {

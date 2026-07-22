@@ -1,6 +1,4 @@
 <?php
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: http://localhost:5173");
 
 $input = json_decode(file_get_contents('php://input'), true);
 
@@ -81,7 +79,7 @@ try {
     // Вставляем только то что знаем — остальное по DEFAULT из схемы
     $stmt = $db->prepare("
         INSERT INTO chess_users (user_name, user_email, user_password_hash, is_active)
-        VALUES (:user_name, :user_email, :user_password_hash, 0)
+        VALUES (:user_name, :user_email, :user_password_hash, 1)
     ");
     $stmt->execute([
         ':user_name'          => $login,

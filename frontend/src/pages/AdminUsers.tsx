@@ -3,10 +3,13 @@ import type { FC } from 'react';
 
 import { apiFetch } from '../api/apiFetch'
 import type { User } from '../types/User'
-import { Role } from '../types/User'
+import type { RoleItem } from '../types/User'
+
+// ---- Компонент ----
 
 export const AdminUsers: FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [allRoles, setAllRoles] = useState<RoleItem[]>([]);
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
@@ -22,6 +25,23 @@ export const AdminUsers: FC = () => {
     user_lichess: '',
   })
 
+  const [selectedRoleIds, setSelectedRoleIds] = useState<number[]>([])
+
+  // Загрузка пользователей и списка ролей
+  // Независимые вызовы: roles может упасть, users — нет
+  useEffect(() => {
+    apiFetch<User[]>('/api/admin/users')
+      .then(setUsers)
+      .catch(console.error)
+      .finally(() => setLoading(false))
+
+    apiFetch<RoleItem[]>('/api/admin/roles')
+      .then(setAllRoles)
+      .catch(console.error)
+  }, [])
+
+  if (loading) return <div>Загрузка...</div>
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
@@ -31,15 +51,15 @@ export const AdminUsers: FC = () => {
     }));
   }
 
-  useEffect(() => {
-    apiFetch<User[]>('/api/admin/users')
-      .then(setUsers)
-      .catch(console.error)
-      .finally(() => setLoading(false))
-  }, [])
+  function handleRoleToggle(roleId: number) {
+    setSelectedRoleIds(prev =>
+      prev.includes(roleId)
+        ? prev.filter(id => id !== roleId)
+        : [...prev, roleId]
+    )
+  }
 
-  if (loading) return <div>Загрузка...</div>
-
+  // Сохранение основных полей пользователя
   async function handleSave() {
     try {
       await apiFetch('/api/admin/users', {
@@ -51,9 +71,32 @@ export const AdminUsers: FC = () => {
       setIsModalOpen(false)
       setSelectedUser(null)
 
-      apiFetch<User[]>('/api/admin/users')
-        .then(setUsers)
-        .catch(console.error)
+      const updated = await apiFetch<User[]>('/api/admin/users')
+      setUsers(updated)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // Сохранение ролей
+  async function handleSaveRoles() {
+    if (!selectedUser) return
+
+    try {
+      await apiFetch('/api/admin/users/roles', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: selectedUser.user_id,
+          role_ids: selectedRoleIds,
+        })
+      })
+
+      setIsModalOpen(false)
+      setSelectedUser(null)
+
+      const updated = await apiFetch<User[]>('/api/admin/users')
+      setUsers(updated)
     } catch (err) {
       console.error(err)
     }
@@ -71,7 +114,12 @@ export const AdminUsers: FC = () => {
       user_chesscom: user.user_chesscom ?? '',
       user_lichess: user.user_lichess ?? '',
     })
+    setSelectedRoleIds(user.roles.map(r => r.role_id))
     setIsModalOpen(true)
+  }
+
+  function getUserRoleNames(user: User): string {
+    return user.roles.map(r => r.role_name).join(', ') || '—'
   }
 
   return (
@@ -93,9 +141,9 @@ export const AdminUsers: FC = () => {
                 >
                   <span>
                     {u.user_name}
-                    {u.user_role === Role.ADMIN && ' 🛡️'}
                     {!u.is_active && ' ❌'}
                     {' — '}rating: {u.user_rating}
+                    {' — '}{getUserRoleNames(u)}
                   </span>
                 </div>
               ))
@@ -117,15 +165,32 @@ export const AdminUsers: FC = () => {
               placeholder="Full name"
             />
 
-            <label>Role</label>
+            {/* ---- Секция ролей ---- */}
+            <label>Roles</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '12px' }}>
+              {allRoles.map(role => (
+                <label key={role.role_id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedRoleIds.includes(role.role_id)}
+                    onChange={() => handleRoleToggle(role.role_id)}
+                  />
+                  <strong>{role.role_name}</strong>
+                  {role.description && <span style={{ color: '#888', fontSize: '0.85em' }}>— {role.description}</span>}
+                </label>
+              ))}
+            </div>
+
+            {/* ---- Legacy select (оставлен для обратной совместимости) ---- */}
+            <label>Legacy role (user_role)</label>
             <select
               className='modal_window_inputT'
               name="user_role"
               value={fields.user_role}
               onChange={handleChange}
             >
-              <option value={Role.USER}>User (0)</option>
-              <option value={Role.ADMIN}>Admin (1)</option>
+              <option value={0}>User (0)</option>
+              <option value={1}>Admin (1)</option>
             </select>
 
             <label>Rating</label>
@@ -174,7 +239,8 @@ export const AdminUsers: FC = () => {
             </label>
 
             <div className="modal_actions">
-              <button onClick={handleSave}>Save</button>
+              <button onClick={handleSave}>Save profile</button>
+              <button onClick={handleSaveRoles}>Save roles</button>
               <button onClick={() => { setIsModalOpen(false); setSelectedUser(null) }}>
                 Cancel
               </button>

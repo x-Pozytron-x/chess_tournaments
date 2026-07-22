@@ -16,6 +16,7 @@ import { About } from "./pages/About";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
+import { AdminLogin } from "./pages/AdminLogin";
 import { AdminLayout } from "./pages/AdminLayout";
 import { AdminPage } from "./pages/Admin";
 import { AdminNews } from "./pages/AdminNews";
@@ -76,6 +77,7 @@ export const App = () => {
           <Route path="news" element={<AdminNews />} />
           <Route path="users" element={<AdminUsers />} />
         </Route>
+        <Route path="/admin/login" element={<AdminLogin />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import type { User } from '../types/User'
-import { Role } from '../types/User'
 import { login, me, logout } from '../api/auth'
 import { ApiError } from '../api/apiError'
 
@@ -10,6 +9,7 @@ type AuthState = {
   isAuthChecked: boolean
   error: string | null
   isAdmin: () => boolean
+  hasPermission: (permission: string) => boolean
 
   login: (data: {
     username: string
@@ -63,6 +63,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   isAdmin: () => {
     const u = get().user
-    return !!u && u.user_role === Role.ADMIN
+    if (!u) return false
+    return u.permissions.includes('admin.access')
+  },
+
+  hasPermission: (permission: string) => {
+    const u = get().user
+    if (!u) return false
+    return u.permissions.includes(permission)
   },
 }))

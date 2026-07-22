@@ -1,17 +1,16 @@
 import { Navigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authStore'
-
-import { Role } from '../types/User'
+import { useAuthCheck } from '../store/useAuthCheck'
 
 export const AdminRoute = ({ children }: { children: React.ReactNode }) => {
-  const user = useAuthStore(s => s.user)
-  const isLoading = useAuthStore(s => s.isLoading)
+  const { isAuthChecked, isLoading, user } = useAuthCheck()
+
+  if (!isAuthChecked) return null
 
   if (isLoading) return null
 
-  if (!user) return <Navigate to="/login" />
+  if (!user) return <Navigate to="/admin/login" />
 
-  if (user.user_role !== Role.ADMIN) {
+  if (!user.permissions.includes('admin.access')) {
     return <Navigate to="/" />
   }
 

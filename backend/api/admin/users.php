@@ -1,25 +1,12 @@
 <?php
 
-if (!isset($_SESSION['user_id'])) {
-  http_response_code(401);
-  echo json_encode(['success' => false, 'errorCode' => 'UNAUTHORIZED']);
-  exit;
-}
-
+require_once __DIR__ . '/../../lib/permissions.php';
 require_once __DIR__ . '/../../config/database.php';
 $db = Database::getInstance();
 
-$stmt = $db->prepare("SELECT user_role FROM chess_users WHERE user_id = :id LIMIT 1");
-$stmt->execute([':id' => $_SESSION['user_id']]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+requireAdmin($db);
 
-if (!$user || $user['user_role'] != 1) {
-  http_response_code(403);
-  echo json_encode(['success' => false, 'errorCode' => 'FORBIDDEN']);
-  exit;
-}
-
-// GET — список всех пользователей
+// GET — список всех пользователей с ролями и разрешениями
 if ($method === 'GET') {
   try {
     $stmt = $db->query("
@@ -30,6 +17,15 @@ if ($method === 'GET') {
       ORDER BY user_id DESC
     ");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Обогащаем каждого пользователя ролями и разрешениями
+    foreach ($users as &$user) {
+      $result = getUserRolesAndPermissions($db, (int)$user['user_id']);
+      $user['roles'] = $result['roles'];
+      $user['permissions'] = $result['permissions'];
+    }
+    unset($user);
+
     echo json_encode(['success' => true, 'data' => $users]);
   } catch (PDOException $e) {
     http_response_code(500);
@@ -38,7 +34,7 @@ if ($method === 'GET') {
   exit;
 }
 
-// PUT — обновление пользователя
+// PUT — обновление пользователя (существующая логика)
 if ($method === 'PUT') {
   $input = json_decode(file_get_contents('php://input'), true);
 
@@ -79,6 +75,25 @@ if ($method === 'PUT') {
       ':lichess'   => $lichess,
       ':user_id'   => $user_id,
     ]);
+
+    // Синхронизируем legacy user_role с таблицей roles
+    // Если user_role = 1 → добавляем ADMIN, убираем USER
+    // Если user_role = 0 → добавляем USER, убираем ADMIN
+    if ($role !== null) {
+      $adminRole = $db->query("SELECT role_id FROM roles WHERE role_name = 'ADMIN'")->fetch(PDO::FETCH_ASSOC);
+      $userRole  = $db->query("SELECT role_id FROM roles WHERE role_name = 'USER'")->fetch(PDO::FETCH_ASSOC);
+
+      if ($adminRole && $userRole) {
+        if ((int)$role === 1) {
+          assignRole($db, (int)$user_id, (int)$adminRole['role_id']);
+          removeRole($db, (int)$user_id, (int)$userRole['role_id']);
+        } else {
+          assignRole($db, (int)$user_id, (int)$userRole['role_id']);
+          removeRole($db, (int)$user_id, (int)$adminRole['role_id']);
+        }
+      }
+    }
+
     echo json_encode(['success' => true]);
   } catch (PDOException $e) {
     http_response_code(500);

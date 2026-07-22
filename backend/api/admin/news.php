@@ -1,34 +1,10 @@
-<?php 
+<?php
 
-if (!isset($_SESSION['user_id'])) {
-  http_response_code(401); 
-  echo json_encode([
-    'success' => false,
-    'errorCode' => 'UNAUTHORIZED'
-  ]); 
-  exit;
-}
+require_once __DIR__ . '/../../lib/permissions.php';
 require_once __DIR__ . '/../../config/database.php';
-//header('Content-Type: application/json');
 $db = Database::getInstance();
 
-$stmt = $db->prepare("
-  SELECT user_role
-  FROM chess_users
-  WHERE user_id = :id
-  LIMIT 1
-");
-$stmt->execute([':id' => $_SESSION['user_id']]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$user || $user['user_role'] != 1) {
-  http_response_code(403);
-  echo json_encode([
-    'success' => false,
-    'errorCode' => 'FORBIDDEN'
-  ]);
-  exit;
-}
+requireAdmin($db);
 
 
 if ($method === 'GET') {
