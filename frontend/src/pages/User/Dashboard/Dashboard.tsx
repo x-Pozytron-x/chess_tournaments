@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { getDashboard } from '../api/dashboard'
-import type { DashboardData } from '../types/dashboard'
+import { getDashboard } from '@/api/dashboard'
+import type { DashboardData } from '@/types/dashboard'
 
 export const Dashboard = () => {
   const [dashboard, setDashboard] = useState<DashboardData | null>(null)

@@ -10,17 +10,17 @@ import './App.css'
 
 import { Header } from "./components/Header";
 
-import { Home } from "./pages/Home";
-import { Contacts } from "./pages/Contacts";
-import { About } from "./pages/About";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import { Profile } from "./pages/Profile";
-import { AdminLogin } from "./pages/AdminLogin";
-import { AdminLayout } from "./pages/AdminLayout";
-import { AdminPage } from "./pages/Admin";
-import { AdminNews } from "./pages/AdminNews";
-import { AdminUsers } from "./pages/AdminUsers";
+import { Home } from "./pages/Home/Home";
+import { Contacts } from "./pages/Contacts/Contacts";
+import { About } from "./pages/About/About";
+import { Login } from "./pages/Login/Login";
+import { Register } from "./pages/Register/Register";
+import { Profile } from "./pages/User/Profile/Profile";
+import { AdminLogin } from "./pages/Admin/Login/AdminLogin";
+import { AdminLayout } from "./pages/Admin/Layout/AdminLayout";
+import { AdminPage } from "./pages/Admin/Dashboard/AdminPage";
+import { AdminNews } from "./pages/Admin/News/AdminNews";
+import { AdminUsers } from "./pages/Admin/Users/AdminUsers";
 
 
 type AppRoute = {

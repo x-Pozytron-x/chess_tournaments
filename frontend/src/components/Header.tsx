@@ -31,7 +31,7 @@ export const Header = () => {
           <span>...</span>
         ) : user ? (
           <>
-            <span>Hi, {user.user_name}</span>
+            
             <Link to="/profile" className='nav_c'>👤</Link>
             <Link to="/settings" className='nav_c'>⚙️</Link>
 

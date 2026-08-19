@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import type { FC } from 'react';
 
-import { apiFetch } from '../api/apiFetch'
-import type { User } from '../types/User'
-import type { RoleItem } from '../types/User'
+import { apiFetch } from '@/api/apiFetch'
+import type { User, RoleItem } from '@/types/User'
 
 // ---- Компонент ----
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import { getDashboard } from '../api/dashboard'
-import type { DashboardData } from '../types/dashboard'
+import { getDashboard } from '@/api/dashboard'
+import type { DashboardData } from '@/types/dashboard'
 import './Admin.css';
 
 export const AdminPage = () => {
@@ -28,15 +28,15 @@ export const AdminPage = () => {
       <div className='admin_content'>
         <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'space-between' }}>
           <div style={{ borderRadius: '12px', background: '#252525', display: 'inline-block', height: '125px', padding: '15px', margin: '0 5px' }}>
-            <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '8px', paddingBottom: '5px' }}>👥 Users:</h4>
+            <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '8px', paddingBottom: '5px' }}>Total Users:</h4>
             <h2 style={{ fontSize: '42px', textAlign: 'center' }}>{dashboard?.usersCount}</h2>
           </div>
 
 
           <div style={{ borderRadius: '12px', background: '#252525', display: 'inline-block', height: '125px', padding: '15px', margin: '0 5px' }}>
-            <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px' }}>👤 Последние регистрации: </h4>
+            <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px' }}>Latest Users:</h4>
 
-            {dashboard?.latestUsers.map(u => (
+            {dashboard?.latestUsers?.map(u => (
               <a style={{ display: 'block' }} key={u.user_id}>
                 <span> {u.user_name} </span>
               </a>
@@ -46,10 +46,10 @@ export const AdminPage = () => {
 
 
         <div className='borderRadius' style={{ borderRadius: '12px', background: '#252525', display: 'block', padding: '15px', margin: '10px 5px' }}>
-          <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px' }}>♟ Active Tournament: </h4>
+          <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px' }}>Active Tournaments:</h4>
 
-          {dashboard?.activeTournaments.length ? (
-            dashboard.activeTournaments.map(n => (
+          {dashboard?.activeTournaments?.length ? (
+            dashboard.activeTournaments?.map(n => (
               <a style={{ display: 'block' }} key={n.tournament_id}>
                 <span>🏆 {n.tournament_name}</span> - <span>✏️</span>
               </a>
@@ -62,8 +62,8 @@ export const AdminPage = () => {
 
 
         <div style={{ borderRadius: '12px', background: '#252525', padding: '15px 25px', margin: '10px 5px' }}>
-          <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px' }}>📰 Последние новости:</h4>
-          {dashboard?.latestNews.map(n => (
+          <h4 style={{ borderBottom: '2px solid #8ab4f8', marginBottom: '15px', paddingBottom: '5px' }}>Latest News:</h4>
+          {dashboard?.latestNews?.map(n => (
             <a style={{ display: 'block' }} key={n.news_id}>
               <span> {n.news_title} - {n.created_at} </span> - <span>✏️</span>
             </a>

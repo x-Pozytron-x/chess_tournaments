@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import './Auth.css';
+//import './Auth.css';
 
-import { addUser } from '../api/register'
-import { ApiError } from '../api/apiError';
-import { messages } from './../utils/messages'
+import { addUser } from '@/api/register'
+import { ApiError } from '@/api/apiError';
+import { messages } from '@/utils/messages'
 interface FormFields {
   login: string;
   pass: string;

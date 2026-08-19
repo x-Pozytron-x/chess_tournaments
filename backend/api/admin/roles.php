@@ -15,7 +15,7 @@ if ($method === 'GET') {
     echo json_encode(['success' => true, 'data' => $roles]);
   } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'errorCode' => 'SERVER_ERROR']);
+    echo json_encode(['success' => false, 'errorCode' => $e->getMessage()]);
   }
   exit;
 }

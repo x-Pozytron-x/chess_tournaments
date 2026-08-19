@@ -1,48 +1,40 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
-import { useAuthStore } from '../store/authStore'
-
+import { useNavigate } from 'react-router-dom';
 import type { FC } from 'react';
-import './Auth.css';
 
-
-// import { ApiError } from '../api/apiError'
-import { messages } from './../utils/messages'
-// import { apiFetch } from '../api/apiFetch'
+import { useAuthStore } from '@/store/authStore'
+import { messages } from '@/utils/messages'
+//import './Auth.css';
 
 interface LoginFields {
   username: string;
   password: string;
-  remember: boolean;
 }
 
 type Errors = Partial<Record<keyof LoginFields, string>>;
 
-export const Login: FC = () => {
+/**
+ * Отдельный вход для администраторов.
+ * После успешного входа — редирект на /admin.
+ * Не показывает «Запомнить» и «Регистрацию».
+ */
+export const AdminLogin: FC = () => {
   const navigate = useNavigate()
 
   const login = useAuthStore(s => s.login)
   const user = useAuthStore(s => s.user)
   const error = useAuthStore(s => s.error)
 
-  // console.log(user)
-
   const [errors, setErrors] = useState<Errors>({});
   const [fields, setFields] = useState<LoginFields>({
     username: '',
     password: '',
-    remember: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  // const [result, setResult] = useState<string>('');
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value, type, checked } = e.target;
-    setFields(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    const { name, value } = e.target;
+    setFields(prev => ({ ...prev, [name]: value }));
 
     if (errors[name as keyof LoginFields]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
@@ -55,7 +47,7 @@ export const Login: FC = () => {
     await login({
       username: fields.username,
       password: fields.password,
-      remember: fields.remember,
+      remember: false,
     })
 
     setSubmitted(true)
@@ -63,24 +55,24 @@ export const Login: FC = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/profile')
+      navigate('/admin')
     }
   }, [user])
 
   return (
     <form className="authForm" onSubmit={handleSubmit}>
       <div className="authForm_content">
-        <h3 className="authForm_title">Вход</h3>
+        <h3 className="authForm_title">Админ-панель</h3>
 
         {submitted && user && (
           <p className="authForm_success">
-            Привет, {user.user_name}! Вы успешно вошли
+            Добро пожаловать, {user.user_name}!
           </p>
         )}
 
         {submitted && error && (
           <p className="authForm_error">
-            {messages[error]}
+            {messages[error] ?? 'Ошибка входа'}
           </p>
         )}
 
@@ -91,7 +83,7 @@ export const Login: FC = () => {
             type="text"
             value={fields.username}
             onChange={handleChange}
-            placeholder="Твой ник на сайте"
+            placeholder="Логин"
           />
         </p>
         {errors.username && <p className="authForm_error">{errors.username}</p>}
@@ -103,29 +95,13 @@ export const Login: FC = () => {
             type="password"
             value={fields.password}
             onChange={handleChange}
-            placeholder="Введи свой мегапароль"
+            placeholder="Пароль"
           />
         </p>
         {errors.password && <p className="authForm_error">{errors.password}</p>}
 
-        <p className="authForm_row authForm_row--noBorder chkbx">
-          <input
-            className="authForm_chkbx"
-            name="remember"
-            type="checkbox"
-            checked={fields.remember}
-            onChange={handleChange}
-          />
-          Запомнить вход где-то на 1 месяц
-        </p>
-        {errors.remember && <p className="authForm_error">{errors.remember}</p>}
-
         <p className="authForm_row authForm_row--noBorder">
-          <button type="submit">Войти</button>
-        </p>
-
-        <p className="authForm_row authForm_row--noBorder text">
-          Еще нет аккаунта? <Link to="/register" className="login">Зарегистрироваться</Link>
+          <button type="submit">Войти в админку</button>
         </p>
       </div>
     </form>

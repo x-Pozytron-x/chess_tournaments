@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import type { FC } from 'react';
 
-import { apiFetch } from '../api/apiFetch'
-import { getNews } from '../api/news'
-import type { News } from '../types/News'
+import { apiFetch } from '@/api/apiFetch'
+import { getNews } from '@/api/news'
+import type { News } from '@/types/News'
 
 
 export const AdminNews: FC = () => {

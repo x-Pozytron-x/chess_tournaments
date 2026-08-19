@@ -22,4 +22,9 @@ export default defineConfig({
       usePolling: true, // Обязательно для WSL! Иначе правки кода не будут подхватываться сразу
     },
   },
+  resolve: {
+    alias: {
+      '@': '/src',
+    }
+  },
 })

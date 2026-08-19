@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import './Home.css';
 
-import { getNews } from '../api/news.tsx'
-import type { News } from '../types/News'
+import { getNews } from '@/api/news'
+import type { News } from '@/types/News'
 
 // Временные данные (потом будут приходить с бэкенда)
 const mockTournaments = {

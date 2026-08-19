@@ -58,3 +58,52 @@ h1, h2 {
 .homeContent section {
   width: 50%;
 }
+
+.stat-card {
+  display: inline-block;
+  width: 45%;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.links-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.links-container a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(255, 215, 0, 0.1));
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 6px;
+  color: #06b6d4;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.links-container a:hover {
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.2), rgba(255, 215, 0, 0.2));
+  border-color: rgba(100, 255, 218, 0.4);
+  transform: translateY(-2px);
+}
