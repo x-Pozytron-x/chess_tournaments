@@ -1,31 +1,85 @@
-import { useAuthStore } from '@/store/authStore';
+﻿import { useAuthStore } from '@/store/authStore';
+import { apiFetch } from '@/api/apiFetch';
 import type { FC } from 'react';
+import { useState, useEffect } from 'react';
 import './Settings.css';
 
 export const Settings: FC = () => {
-  const user = useAuthStore(s => s.user);
+  const currentUser = useAuthStore(s => s.user);
+  const [loading, setLoading] = useState(true);
+  const [profileData, setProfileData] = useState({
+    user_telegram: '',
+    user_chesscom: '',
+    user_lichess: '',
+    user_email: '',
+  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [savedMessage, setSavedMessage] = useState('');
 
-  if (!user) {
+  useEffect(() => {
+    if (!currentUser) return;
+    const loadData = async () => {
+      try {
+        const data = await apiFetch<{
+          user_telegram?: string | null;
+          user_chesscom?: string | null;
+          user_lichess?: string | null;
+          user_email?: string | null;
+        }>('/api/me');
+        setProfileData({
+          user_telegram: data.user_telegram || '',
+          user_chesscom: data.user_chesscom || '',
+          user_lichess: data.user_lichess || '',
+          user_email: data.user_email || '',
+        });
+      } catch {
+        // Ignore errors, fields will remain empty
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, [currentUser]);
+
+  const saveProfile = async () => {
+    if (!currentUser) return;
+    setIsSaving(true);
+    setSavedMessage('');
+    try {
+      await apiFetch('/api/me', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(profileData),
+      });
+      setSavedMessage('Changes saved');
+    } catch {
+      setSavedMessage('Failed to save changes');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (!currentUser) {
     return <div>Пожалуйста, войдите в аккаунт</div>;
   }
 
   return (
     <main>
       <h1 className="mainTitle">Settings</h1>
-
+      {loading && <div>Загрузка...</div>}
       <div className="settingsGrid">
         {/* Account Information */}
         <section className="settingsCard">
           <h2>Account Information</h2>
-
           <div className="settingsRow">
             <label>Username</label>
-            {user.user_name || '—'}
+            {currentUser.user_name || '-'}
           </div>
-
           <div className="settingsRow">
             <label>Account status</label>
-            {user.is_active ? (
+            {currentUser.is_active ? (
               <span className="status-badge status-active">
                 <span className="status-dot"></span>Active
               </span>
@@ -35,79 +89,93 @@ export const Settings: FC = () => {
               </span>
             )}
           </div>
-
           <div className="settingsRow">
             <label>Registration date</label>
-            {user.created_at ? (
-              <time dateTime={user.created_at}>
-                {new Date(user.created_at).toLocaleDateString('ru-RU', {
+            {currentUser.created_at ? (
+              <time dateTime={currentUser.created_at}>
+                {new Date(currentUser.created_at).toLocaleDateString('ru-RU', {
                   day: 'numeric',
                   month: 'long',
                   year: 'numeric',
                 })}
               </time>
             ) : (
-              '—'
+              '-'
             )}
           </div>
         </section>
-
         {/* Profile Information */}
         <section className="settingsCard">
           <h2>Profile Information</h2>
-
           <div className="settingsRow">
             <label htmlFor="telegram">Telegram</label>
             <div className="settingsInput">
-              <input
+            <input
                 type="text"
                 id="telegram"
                 placeholder="@username"
-              />
+                value={profileData.user_telegram}
+                onChange={(e) => setProfileData(prev => ({ ...prev, user_telegram: e.target.value }))}
+            />
             </div>
           </div>
-
           <div className="settingsRow">
             <label htmlFor="chesscom">Chess.com</label>
             <div className="settingsInput">
-              <input
+            <input
                 type="text"
                 id="chesscom"
                 placeholder="username"
-              />
+                value={profileData.user_chesscom}
+                onChange={(e) => setProfileData(prev => ({ ...prev, user_chesscom: e.target.value }))}
+            />
             </div>
           </div>
-
           <div className="settingsRow">
             <label htmlFor="lichess">Lichess</label>
             <div className="settingsInput">
-              <input
+            <input
                 type="text"
                 id="lichess"
                 placeholder="username"
-              />
+                value={profileData.user_lichess}
+                onChange={(e) => setProfileData(prev => ({ ...prev, user_lichess: e.target.value }))}
+            />
             </div>
           </div>
-
           <div className="settingsRow">
             <label htmlFor="email">Email</label>
             <div className="settingsInput">
-              <input
+            <input
                 type="email"
                 id="email"
                 placeholder="you@example.com"
-              />
+                value={profileData.user_email}
+                onChange={(e) => setProfileData(prev => ({ ...prev, user_email: e.target.value }))}
+            />
             </div>
           </div>
-
+          <div className="settingsRow">
+            <button
+              type="button"
+              className="settingsBtn settingsBtn--primary"
+              onClick={saveProfile}
+              disabled={isSaving}
+            >
+              {isSaving ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
+          <div className="settingsRow">
+            {savedMessage && <span className="settingsMessage">{savedMessage}</span>}
+          </div>
           <div className="settingsRow">
             <label>Avatar</label>
             <div className="settingsAvatar">
               <div className="avatarPreview">
-                {user.user_avatar ? (
-                  <img src={user.user_avatar} alt="Avatar" />
+                {currentUser.user_avatar ? (
+                  <img src={currentUser.user_avatar} alt="Avatar" />
                 ) : (
-                  <div className="avatarPlaceholder">👤</div>
+                  <div className="avatarPlaceholder">??</div>
                 )}
               </div>
               <div className="avatarUpload">
@@ -118,18 +186,16 @@ export const Settings: FC = () => {
                   hidden
                 />
                 <button className="avatarBtn" type="button">
-                  <span>📤</span>
-                  <span>Загрузить аватарку</span>
+                  <span>+</span>
+                  <span>Загрузить изображение</span>
                 </button>
               </div>
             </div>
           </div>
         </section>
-
         {/* Password */}
         <section className="settingsCard">
           <h2>Password</h2>
-
           <div className="passwordSection">
             <div className="passwordField">
               <label htmlFor="currentPassword">Current password</label>
@@ -137,36 +203,33 @@ export const Settings: FC = () => {
                 <input
                   type="password"
                   id="currentPassword"
-                  placeholder="••••••••"
+                  placeholder="********"
                 />
               </div>
             </div>
-
             <div className="passwordField">
               <label htmlFor="newPassword">New password</label>
               <div className="settingsInput">
                 <input
                   type="password"
                   id="newPassword"
-                  placeholder="••••••••"
+                  placeholder="********"
                 />
               </div>
             </div>
-
             <div className="passwordField">
               <label htmlFor="confirmPassword">Confirm new password</label>
               <div className="settingsInput">
                 <input
                   type="password"
                   id="confirmPassword"
-                  placeholder="••••••••"
+                  placeholder="********"
                 />
               </div>
             </div>
-
             <div className="passwordField">
               <button type="button" disabled className="settingsBtn settingsBtn--primary">
-                Изменить пароль
+                Update password
               </button>
             </div>
           </div>
