@@ -17,6 +17,7 @@ import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { ProfileCurrent } from "./pages/User/Profile/ProfileCurrent";
 import { ProfileOther } from "./pages/User/Profile/ProfileOther";
+import { Settings } from "./pages/User/Settings/Settings";
 import { AdminLogin } from "./pages/Admin/Login/AdminLogin";
 import { AdminLayout } from "./pages/Admin/Layout/AdminLayout";
 import { AdminPage } from "./pages/Admin/Dashboard/AdminPage";
@@ -37,6 +38,7 @@ const ROUTES: AppRoute[] = [
   { path: "/register", component: Register },
   { path: "/profile", component: ProfileCurrent, protected: true },
   { path: "/profile/:user_name", component: ProfileOther, protected: true },
+  { path: "/settings", component: Settings, protected: true },
 ];
 
 export const App = () => {

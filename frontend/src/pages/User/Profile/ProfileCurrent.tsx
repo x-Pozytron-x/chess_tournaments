@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/authStore'
-import { apiFetch } from '@/api/apiFetch'
 import type { User } from '@/types/User'
 
 export const ProfileCurrent = () => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const currentUser = useAuthStore(s => s.user)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const current = useAuthStore(s => s.user)
-
-    if (current) {
-      setCurrentUser(current)
+    if (currentUser) {
+      setLoading(false)
     }
-
-    setLoading(false)
-  }, [])
+  }, [currentUser])
 
   if (loading) {
     return <div>Загрузка...</div>
@@ -39,7 +34,6 @@ export const ProfileCurrent = () => {
             <li key={role.role_id}>{role.role_name}</li>
           ))}
         </ul>
-
 
         {/* Tournament Statistics */}
         <div className="stat-card">
