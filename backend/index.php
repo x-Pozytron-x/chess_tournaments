@@ -117,6 +117,20 @@ if ($method === 'PUT') {
   }
 }
 
+// public users list
+if ($method === 'GET') {
+  if ($path === $isProd . 'users') {
+    require_once __DIR__ . '/api/users.php';
+    exit;
+  }
+  // public user by name
+  if (preg_match('/^users\/([^\/]+)$/', $path, $matches)) {
+    $_GET['user_name'] = $matches[1];
+    require_once __DIR__ . '/api/users.php';
+    exit;
+  }
+}
+
 
 http_response_code(404);
 echo json_encode([
