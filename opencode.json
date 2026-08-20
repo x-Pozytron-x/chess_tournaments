@@ -1,24 +1,24 @@
 ﻿{
-    "$schema":  "https://opencode.ai/config.json",
-    "provider":  {
-                     "llama.cpp":  {
-                                       "npm":  "@ai-sdk/openai-compatible",
-                                       "name":  "llama-server (local)",
-                                       "options":  {
-                                                       "baseURL":  "http://127.0.0.1:8080/v1"
-                                                   },
-                                       "models":  {
-                                                      "Qwen3.5-9B-Q4_K_M":  {
-                                                                                "name":  "Qwen3.5-9B",
-                                                                                "capabilities":  {
-                                                                                                     "tools":  true
-                                                                                                 },
-                                                                                "limit":  {
-                                                                                              "context":  24384,
-                                                                                              "output":  8096
-                                                                                          }
-                                                                            }
-                                                  }
-                                   }
-                 }
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llama.cpp": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "llama-server (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:8080/v1"
+      },
+      "models": {
+        "Qwen3-Coder-30B-A3B-Instruct-Q4_K_M": {
+          "name": "Qwen3-Coder-30B",
+          "capabilities": {
+            "tools": true
+          },
+          "limit": {
+            "context": 24576,
+            "output": 8192
+          }
+        }
+      }
+    }
+  }
 }

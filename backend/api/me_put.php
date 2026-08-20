@@ -22,10 +22,8 @@ try {
     exit;
   }
 
-  // Разрешённые поля для обновления
+  // Обновление данных в chess_user_data
   $allowedFields = ['user_telegram', 'user_chesscom', 'user_lichess', 'user_email'];
-
-  // Фильтруем только разрешённые поля
   $updateData = [];
   $updatedFields = [];
 
@@ -36,7 +34,6 @@ try {
     }
   }
 
-  // Если нет данных для обновления
   if (empty($updateData)) {
     http_response_code(400);
     echo json_encode([
@@ -47,14 +44,13 @@ try {
     exit;
   }
 
-  // Подготовка UPDATE запроса
   $setClauses = [];
   foreach ($updateData as $key => $value) {
     $setClauses[] = "`$key` = :$key";
   }
 
   $setClause = implode(', ', $setClauses);
-  $sql = "UPDATE chess_users SET $setClause WHERE user_id = :user_id";
+  $sql = "UPDATE chess_user_data SET $setClause WHERE user_id = :user_id";
 
   $stmt = $db->prepare($sql);
   $params = array_merge($updateData, [':user_id' => $userId]);
@@ -70,9 +66,8 @@ try {
     exit;
   }
 
-  // Получаем обновлённые данные (без password и чувствительных полей)
   $stmt = $db->prepare("SELECT user_telegram, user_chesscom, user_lichess, user_email
-    FROM chess_users
+    FROM chess_user_data
     WHERE user_id = :user_id
     LIMIT 1
   ");

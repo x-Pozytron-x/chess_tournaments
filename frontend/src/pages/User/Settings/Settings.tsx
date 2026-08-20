@@ -15,6 +15,11 @@ export const Settings: FC = () => {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [savedMessage, setSavedMessage] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState('');
 
   useEffect(() => {
     if (!currentUser) return;
@@ -58,6 +63,45 @@ export const Settings: FC = () => {
       setSavedMessage('Failed to save changes');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const changePassword = async () => {
+    if (!currentUser) return;
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordMessage('Passwords do not match');
+      return;
+    }
+    setChangingPassword(true);
+    setPasswordMessage('');
+    try {
+      await apiFetch('/api/me/password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          old_password: currentPassword,
+          new_password: newPassword,
+        }),
+      });
+      setPasswordMessage('Password changed successfully');
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (error: any) {
+      if (error.status === 401) {
+        setPasswordMessage('Current password is incorrect');
+      } else if (error.status === 400 || error.error === 'PASSWORD_TOO_SHORT') {
+        setPasswordMessage('Password is too short');
+      } else {
+        setPasswordMessage('Failed to change password');
+      }
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -171,24 +215,15 @@ export const Settings: FC = () => {
           <div className="settingsRow">
             <label>Avatar</label>
             <div className="settingsAvatar">
-              <div className="avatarPreview">
+              {/* <div className="avatarPreview">
                 {currentUser.user_avatar ? (
                   <img src={currentUser.user_avatar} alt="Avatar" />
                 ) : (
                   <div className="avatarPlaceholder">??</div>
                 )}
-              </div>
+              </div> */}
               <div className="avatarUpload">
-                <input
-                  type="file"
-                  id="avatar-upload"
-                  accept="image/*"
-                  hidden
-                />
-                <button className="avatarBtn" type="button">
-                  <span>+</span>
-                  <span>Загрузить изображение</span>
-                </button>
+                <span>Avatar upload — Coming soon</span>
               </div>
             </div>
           </div>
@@ -197,41 +232,52 @@ export const Settings: FC = () => {
         <section className="settingsCard">
           <h2>Password</h2>
           <div className="passwordSection">
-            <div className="passwordField">
-              <label htmlFor="currentPassword">Current password</label>
-              <div className="settingsInput">
-                <input
-                  type="password"
-                  id="currentPassword"
-                  placeholder="********"
-                />
-              </div>
-            </div>
-            <div className="passwordField">
-              <label htmlFor="newPassword">New password</label>
-              <div className="settingsInput">
-                <input
-                  type="password"
-                  id="newPassword"
-                  placeholder="********"
-                />
-              </div>
-            </div>
-            <div className="passwordField">
-              <label htmlFor="confirmPassword">Confirm new password</label>
-              <div className="settingsInput">
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="********"
-                />
-              </div>
-            </div>
-            <div className="passwordField">
-              <button type="button" disabled className="settingsBtn settingsBtn--primary">
-                Update password
-              </button>
-            </div>
+             <div className="passwordField">
+               <label htmlFor="currentPassword">Current password</label>
+               <div className="settingsInput">
+                 <input
+                   type="password"
+                   id="currentPassword"
+                   placeholder="********"
+                   value={currentPassword}
+                   onChange={(e) => setCurrentPassword(e.target.value)}
+                 />
+               </div>
+             </div>
+             <div className="passwordField">
+               <label htmlFor="newPassword">New password</label>
+               <div className="settingsInput">
+                 <input
+                   type="password"
+                   id="newPassword"
+                   placeholder="********"
+                   value={newPassword}
+                   onChange={(e) => setNewPassword(e.target.value)}
+                 />
+               </div>
+             </div>
+             <div className="passwordField">
+               <label htmlFor="confirmPassword">Confirm new password</label>
+               <div className="settingsInput">
+                 <input
+                   type="password"
+                   id="confirmPassword"
+                   placeholder="********"
+                   value={confirmPassword}
+                   onChange={(e) => setConfirmPassword(e.target.value)}
+                 />
+               </div>
+             </div>
+             <div className="passwordField">
+               <button
+                 type="button"
+                 className="settingsBtn settingsBtn--primary"
+                 onClick={changePassword}
+                 disabled={changingPassword}
+               >
+                 {changingPassword ? 'Changing...' : 'Update password'}
+               </button>
+             </div>
           </div>
         </section>
       </div>

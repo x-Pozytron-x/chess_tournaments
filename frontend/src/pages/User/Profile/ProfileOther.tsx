@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { apiFetch } from '@/api/apiFetch'
+import { ApiError } from '@/api/apiError'
 import type { User } from '@/types/User'
 
 export const ProfileOther = () => {
@@ -17,12 +18,31 @@ export const ProfileOther = () => {
     const fetchUser = async () => {
       try {
         setLoading(true)
-        const data = await apiFetch<User | null>(`/api/users/${user_name}`)
-        setUser(data)
         setError(null)
-      } catch {
-        setError('Пользователь не найден')
-        setUser(null)
+        const data = await apiFetch<User | null>(`/api/users/${user_name}`)
+        // Handle case where API returns null or undefined
+        if (data === null || data === undefined) {
+          setError('Пользователь не найден')
+          setUser(null)
+        } else {
+          setUser(data)
+        }
+      } catch (err) {
+        if (err instanceof ApiError) {
+          if (err.status === 404) {
+            setError('Пользователь не найден')
+          } else if (err.status === 401) {
+            setError('Необходима авторизация')
+          } else if (err.status === 403) {
+            setError('Доступ запрещен')
+          } else if (err.status === 500) {
+            setError('Внутренняя ошибка сервера')
+          } else {
+            setError('Произошла ошибка при загрузке профиля')
+          }
+        } else {
+          setError('Сетевая ошибка при загрузке профиля')
+        }
       } finally {
         setLoading(false)
       }
@@ -32,11 +52,11 @@ export const ProfileOther = () => {
   }, [user_name])
 
   if (loading) {
-    return <div>Загрузка...</div>
+    return <div>Загрузка профиля...</div>
   }
 
   if (error) {
-    return <div>{error}</div>
+    return <div style={{ color: 'red' }}>{error}</div>
   }
 
   if (!user) {
@@ -66,7 +86,7 @@ export const ProfileOther = () => {
         </div>
       </div>
 
-      <h2>Links</h2>
+      <h2>Ссылки</h2>
       <div className="links-container">
         {user.user_chesscom && (
           <a href={`https://www.chess.com/member/${user.user_chesscom}`} target="_blank" rel="noopener noreferrer">
@@ -85,7 +105,7 @@ export const ProfileOther = () => {
         )}
       </div>
       {(!user.user_chesscom && !user.user_lichess && !user.user_telegram) && (
-        <p>No external profiles linked</p>
+        <p>Нет внешних профилей</p>
       )}
     </div>
   )

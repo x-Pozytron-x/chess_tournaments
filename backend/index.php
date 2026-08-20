@@ -33,7 +33,17 @@ if ($method === 'GET') {
 }
 if ($method === 'GET') {
   if ($path === $isProd . 'me') {
-   require_once __DIR__ . '/api/auth/me.php';
+    require_once __DIR__ . '/api/auth/me.php';
+    exit;
+  }
+}
+if ($method === 'POST') {
+  if ($path === $isProd . 'me') {
+    require_once __DIR__ . '/api/auth/me.php';
+    exit;
+  }
+  if ($path === $isProd . 'me/password') {
+    require_once __DIR__ . '/api/auth/me.php';
     exit;
   }
 }
