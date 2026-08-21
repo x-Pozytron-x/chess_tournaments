@@ -4,13 +4,12 @@ export type ApiResponse<T> = {
   error?: string
 }
 
+// api/news.ts
+import { apiFetch } from './apiFetch'
 import type { News } from '../types/News'
 
-// api/news.ts
 export async function getNews(): Promise<News[]> {
-  const response = await fetch('/api/news');
-  const data = await response.json();
-  return data;
+  return apiFetch<News[]>('/api/news')
 }
 
 // И так же легко добавлять новые эндпоинты:

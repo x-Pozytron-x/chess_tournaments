@@ -107,3 +107,30 @@ h1, h2 {
   border-color: rgba(100, 255, 218, 0.4);
   transform: translateY(-2px);
 }
+
+/* Error message styling for ProfileOther */
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.error-card {
+  background: rgba(10, 12, 15, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 400px;
+}
+
+.error-message {
+  color: #9ca3af;
+  font-size: 1rem;
+  line-height: 1.5;
+}

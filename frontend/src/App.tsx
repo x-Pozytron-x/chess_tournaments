@@ -15,8 +15,7 @@ import { Contacts } from "./pages/Contacts/Contacts";
 import { About } from "./pages/About/About";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
-import { ProfileCurrent } from "./pages/User/Profile/ProfileCurrent";
-import { ProfileOther } from "./pages/User/Profile/ProfileOther";
+import { Profile } from "./pages/User/Profile/Profile";
 import { Settings } from "./pages/User/Settings/Settings";
 import { AdminLogin } from "./pages/Admin/Login/AdminLogin";
 import { AdminLayout } from "./pages/Admin/Layout/AdminLayout";
@@ -36,8 +35,8 @@ const ROUTES: AppRoute[] = [
   { path: "/contacts", component: Contacts },
   { path: "/login", component: Login },
   { path: "/register", component: Register },
-  { path: "/profile", component: ProfileCurrent, protected: true },
-  { path: "/profile/:user_name", component: ProfileOther, protected: true },
+  { path: "/profile", component: Profile, protected: true },
+  { path: "/profile/:user_name", component: Profile, protected: true },
   { path: "/settings", component: Settings, protected: true },
 ];
 

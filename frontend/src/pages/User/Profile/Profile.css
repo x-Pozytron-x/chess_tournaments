@@ -1,0 +1,268 @@
+/* Profile.css - CyberChess Glassmorphism Design System */
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  border: 3px solid rgba(100, 255, 218, 0.3);
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.1);
+  display: block;
+}
+
+.profile-header-info {
+  width: 100%;
+}
+
+.profile-username {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+  color: #f9fafb;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.profile-rating {
+  font-size: 1.2rem;
+  color: #06b6d4;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.profile-fullname {
+  font-size: 1.1rem;
+  color: #9ca3af;
+  margin-bottom: 1.5rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+}
+
+.profile-section-title {
+  width: 100%;
+  font-size: 1.3rem;
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.profile-info-grid {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-info-item {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.profile-info-label {
+  width: 120px;  
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 0.25rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.profile-info-value {
+  font-size: 1rem;
+  color: #f9fafb;
+  font-weight: 500;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  margin-bottom: 0.5rem;
+}
+
+.profile-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  box-sizing: border-box;
+}
+
+.role-badge {
+  background: rgba(100, 255, 218, 0.1);
+  color: #06b6d4;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 1rem 0;
+}
+
+.links-container a {
+  display: inline-block;
+  padding: 0.55rem 1.0rem;
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(255, 215, 0, 0.1));
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 8px;
+  color: #06b6d4;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 100px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.links-container a:hover {
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.2), rgba(255, 215, 0, 0.2));
+  border-color: rgba(100, 255, 218, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tournament-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  box-sizing: border-box;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.stat-value {
+  color: #6b7280;
+  font-style: italic;
+  font-size: 1.2rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  font-weight: 600;
+}
+
+.no-links-message {
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  padding: 1rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Responsive design 
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .profile-username {
+    font-size: 1.5rem;
+  }
+  
+  .profile-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tournament-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .links-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .links-container a {
+    width: 100%;
+    max-width: 250px;
+  }
+}*/

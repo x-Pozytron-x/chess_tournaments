@@ -20,7 +20,7 @@ try {
     exit;
   }
   
-  $stmt = $db->prepare("SELECT user_id, user_name, user_rating, user_telegram, user_chesscom, user_lichess, is_active
+  $stmt = $db->prepare("SELECT user_id, user_name, user_rating, user_telegram, user_chesscom, user_lichess, is_active, created_at
     FROM chess_users
     WHERE user_name = :user_name
     LIMIT 1

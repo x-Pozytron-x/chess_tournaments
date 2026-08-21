@@ -19,6 +19,8 @@ export type User = {
   created_at: string,
   roles: RoleItem[],
   permissions: string[],
+  user_tournaments_count: number,
+  user_tournaments_wins: number,
 }
 
 export const Role = {

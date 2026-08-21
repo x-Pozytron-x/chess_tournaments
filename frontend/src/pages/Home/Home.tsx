@@ -40,7 +40,10 @@ export function Home() {
   useEffect(() => {
     getNews()
       .then(setNews)
-      .catch(console.error)
+      .catch(error => {
+        console.error('Failed to fetch news:', error)
+        setNews([])
+      })
       .finally(() => setLoading(false))
   }, [])
   if (loading) return <div>Загрузка...</div>
@@ -140,23 +143,25 @@ export function Home() {
                 <span>📰</span> Новости
               </h3>
               <ul className="news-list">
-                {news.sort((a, b) => {
-                  if (a.news_date > b.news_date) {
-                    return -1;
-                  }
-                  if (a.news_date < b.news_date) {
-                    return 1;
-                  }
-                  return 0;
-                }).map(p => (
-                  p.news_status ? ('') : (
-                    < li className="news-item" key={p.news_id} >
-                      <h4> {p.news_title}</h4>
-                      <p>{p.news_descr}</p>
-                      <span className="news-date">{p.news_date}</span>
-                    </li>
+                {Array.isArray(news) && news
+                  .sort((a, b) => {
+                    if (a.news_date > b.news_date) {
+                      return -1;
+                    }
+                    if (a.news_date < b.news_date) {
+                      return 1;
+                    }
+                    return 0;
+                  })
+                  .map(p => (
+                    p.news_status ? ('') : (
+                      <li className="news-item" key={p.news_id}>
+                        <h4>{p.news_title}</h4>
+                        <p>{p.news_descr}</p>
+                        <span className="news-date">{p.news_date}</span>
+                      </li>
+                    )
                   ))
-                )
                 }
               </ul>
               <Link to="/news" className="action-link">
@@ -170,7 +175,7 @@ export function Home() {
                 <span>🚀</span> В планах
               </h3>
               <ul className="plans-list">
-                {news.map(p => (
+                {Array.isArray(news) && news.map(p => (
                   p.news_status ? (
                     <li className="news-item" key={p.news_id}>
                       <h4> {p.news_title}</h4>
