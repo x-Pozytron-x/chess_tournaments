@@ -143,6 +143,11 @@ if ($method === 'GET') {
     require_once __DIR__ . '/api/users.php';
     exit;
   }
+  // public rating list
+  if ($path === $isProd . 'rating') {
+    require_once __DIR__ . '/api/rating.php';
+    exit;
+  }
 }
 
 

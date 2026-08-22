@@ -12,7 +12,7 @@ const formatDate = (dateString: string): string => {
 }
 
 export const ProfileCurrent = () => {
-  const currentUser = useAuthStore(s => s.user)
+  const currentUser = useAuthStore(state => state.user)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

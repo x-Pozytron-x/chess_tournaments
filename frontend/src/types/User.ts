@@ -21,6 +21,9 @@ export type User = {
   permissions: string[],
   user_tournaments_count: number,
   user_tournaments_wins: number,
+  user_tournaments_first_places: number | null,
+  user_tournaments_second_places: number | null,
+  user_tournaments_third_places: number | null,
 }
 
 export const Role = {

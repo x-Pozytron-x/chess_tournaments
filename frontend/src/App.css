@@ -10,7 +10,7 @@ body {
     font-family: 'Inter', sans-serif;
     background: #0a0c0f;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 5px;
     position: relative;
     overflow-x: hidden;
 }
