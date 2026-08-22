@@ -6,7 +6,6 @@
     background: #0a0c0f;
     color: #fff;
     position: relative;
-    padding: 2rem;
 }
 
 /* Шахматный фон */
@@ -30,7 +29,7 @@
     margin: 0 auto;
     position: relative;
     z-index: 1;
-    padding: 2rem 0 4rem;
+    padding: 10px;
 }
 
 /* Заголовок раздела */

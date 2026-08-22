@@ -46,6 +46,25 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .logo-text {
+    display: none;
+  }
+  
+  .nav_a {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .nav_c {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
 .nav {
   display: flex;
   align-items: center;

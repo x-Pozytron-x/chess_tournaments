@@ -23,7 +23,7 @@ export const Header = () => {
     <header className='header'>
       <Link to="/" className="logo">
         <img src={logotype} alt="" width="70px" />
-        <span>CyberChess</span>
+        <span className="logo-text">CyberChess</span>
       </Link>
 
       <nav className='nav'>
@@ -31,13 +31,14 @@ export const Header = () => {
           <span>...</span>
         ) : user ? (
           <>
+
+            {isAdmin && (
+              <Link to="/admin" className='nav_c' style={{marginRight: '1.5rem'}}>🤖</Link>
+            )}
             
             <Link to="/profile" className='nav_c'>👤</Link>
             <Link to="/settings" className='nav_c'>⚙️</Link>
-
-            {isAdmin && (
-              <Link to="/admin" className='nav_c'>🤖</Link>
-            )}
+            <Link to="/rating" className='nav_c'>📊</Link>
 
             <button onClick={handleLogout} className='nav_c'>⏻</button>
           </>
@@ -47,6 +48,7 @@ export const Header = () => {
             <Link to="/about" className='nav_a'>О сайте</Link>
             <Link to="/register" className='nav_a register'>Регистрация</Link>
             <Link to="/login" className='nav_a login'>Вход</Link>
+            <Link to="/rating" className='nav_c'>📊</Link>
           </>
         )}
 

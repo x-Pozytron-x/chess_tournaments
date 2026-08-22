@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore';
 
 import './Home.css';
 
@@ -36,6 +37,7 @@ const mockTournaments = {
 export function Home() {
   const [news, setNews] = useState<News[]>([])
   const [loading, setLoading] = useState(true)
+  const user = useAuthStore(s => s.user)
 
   useEffect(() => {
     getNews()
@@ -51,10 +53,9 @@ export function Home() {
     <main>
 
       <div className="home-page">
-        <h1>Добро пожаловать на сайт шахматных турниров!</h1>
+        {!user && <h1>Добро пожаловать на сайт шахматных турниров!</h1>}
         <div className="home-container">
           {/* Заголовок */}
-          <br /> <br />
           <h1 className="section-title">Ближайшие турниры</h1>
 
           {/* Сетка турниров */}
