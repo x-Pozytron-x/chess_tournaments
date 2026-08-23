@@ -23,6 +23,8 @@ import { AdminLayout } from "./pages/Admin/Layout/AdminLayout";
 import { AdminPage } from "./pages/Admin/Dashboard/AdminPage";
 import { AdminNews } from "./pages/Admin/News/AdminNews";
 import { AdminUsers } from "./pages/Admin/Users/AdminUsers";
+import { AdminTournaments } from "./pages/Admin/Tournaments/Tournaments";
+import { AdminSettings } from './pages/Admin/Settings/Settings';
 
 
 type AppRoute = {
@@ -81,6 +83,8 @@ export const App = () => {
           <Route index element={<AdminPage />} />
           <Route path="news" element={<AdminNews />} />
           <Route path="users" element={<AdminUsers />} />
+          <Route path="tournaments" element={<AdminTournaments />} />
+          <Route path="settings" element={<AdminSettings />} />
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} />
       </Routes>

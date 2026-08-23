@@ -77,6 +77,10 @@ if ($method === 'POST') {
     require_once __DIR__ . '/api/admin/news.php';
     exit;
   }
+  if ($path === $isProd . 'admin/tournaments') {
+    require_once __DIR__ . '/api/tournaments/create.php';
+    exit;
+  }
 }
 if ($method === 'PUT') {
   if ($path === $isProd . 'admin/news') {
@@ -102,6 +106,10 @@ if ($method === 'GET') {
     exit;
   }
 }
+  if ($path === $isProd . 'tournaments') {
+    require_once __DIR__ . '/api/tournaments/index.php';
+    exit;
+  }
 
 // admin user roles
 if ($method === 'GET') {

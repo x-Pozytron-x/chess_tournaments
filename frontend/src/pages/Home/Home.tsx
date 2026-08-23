@@ -6,40 +6,30 @@ import './Home.css';
 
 import { getNews } from '@/api/news'
 import type { News } from '@/types/News'
+import { apiFetch } from '@/api/apiFetch'
 
-// Временные данные (потом будут приходить с бэкенда)
-const mockTournaments = {
-  ongoing: {
-    id: 1,
-    name: 'JW Tournament',
-    status: 'ongoing',
-    round: 4,
-    totalRounds: 7,
-    participants: 12,
-    maxParticipants: 12
-  },
-  upcoming: {
-    id: 2,
-    name: 'JW Tournament',
-    status: 'upcoming',
-    startDate: '1 июня',
-    participants: 5,
-    maxParticipants: 12
-  },
-  completed: {
-    id: 3,
-    name: 'Панда ест макбук',
-    status: 'completed',
-    winner: '@alex',
-    completedAt: '1222 дня назад'
-  }
-};
+// Тип для турнира
+interface Tournament {
+  tournament_id: number;
+  tournament_name: string;
+  tournament_description: string;
+  tournament_format: string;
+  tournament_status: string;
+  registration_start: string;
+  registration_end: string;
+  start_at: string;
+  end_at: string;
+  created_at: string;
+}
+
 export function Home() {
   const [news, setNews] = useState<News[]>([])
   const [loading, setLoading] = useState(true)
+  const [tournaments, setTournaments] = useState<Tournament[]>([])
   const user = useAuthStore(s => s.user)
 
   useEffect(() => {
+    // Получаем новости
     getNews()
       .then(setNews)
       .catch(error => {
@@ -47,7 +37,79 @@ export function Home() {
         setNews([])
       })
       .finally(() => setLoading(false))
+    
+    // Получаем турниры
+    apiFetch('/api/tournaments')
+      .then(response => {
+        // Make sure response is properly structured before accessing properties
+        if (response && typeof response === 'object') {
+          // Handle the case where response is the tournaments data directly
+          if (response.tournaments !== undefined) {
+            setTournaments(response.tournaments || []);
+          } else if (response.success !== undefined) {
+            // Handle the expected response structure
+            if (response.success) {
+              setTournaments(response.tournaments || []);
+            } else {
+              console.error('API returned error:', response);
+              setTournaments([]);
+            }
+          } else {
+            // If it's not structured as expected, try to treat it as raw tournament array
+            if (Array.isArray(response)) {
+              setTournaments(response);
+            } else {
+              console.error('Unexpected response format:', response);
+              setTournaments([]);
+            }
+          }
+        } else {
+          console.error('Invalid API response:', response);
+          setTournaments([]);
+        }
+      })
+      .catch(error => {
+        console.error('API call failed completely:', error);
+        setTournaments([]);
+      })
   }, [])
+  }, [])
+  
+  // Функция для получения ближайшего запланированного турнира
+  const getUpcomingTournament = () => {
+    // Проверяем, что tournaments определен и не пуст
+    if (!tournaments || tournaments.length === 0) {
+      console.log('Нет турниров');
+      return null;
+    }
+    
+    console.log('Турниры для фильтрации:', tournaments);
+    
+    // Ищем турниры со статусом "upcoming" (который соответствует запланированным)
+    const scheduledTournaments = tournaments.filter(tournament => 
+      tournament.tournament_status === 'upcoming' || 
+      tournament.tournament_status === 'registration' ||
+      tournament.tournament_status === 'active'
+    );
+    
+    console.log('Фильтр по статусу upcoming/registration/active:', scheduledTournaments);
+    
+    if (scheduledTournaments.length === 0) {
+      console.log('Нет турниров со статусом upcoming/registration/active');
+      return null;
+    }
+    
+    // Сортируем по дате начала и возвращаем первый (ближайший)
+    const sorted = scheduledTournaments
+      .sort((a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime());
+    
+    console.log('Отсортированные турниры:', sorted);
+    
+    return sorted[0];
+  }
+
+  const upcomingTournament = getUpcomingTournament();
+  
   if (loading) return <div>Загрузка...</div>
   return (
     <main>
@@ -61,79 +123,35 @@ export function Home() {
           {/* Сетка турниров */}
           <div className="tournaments-grid">
             {/* Текущий турнир */}
-            {mockTournaments.ongoing && (
-              <div className="tournament-card ongoing">
-                <span className="tournament-status status-ongoing">🔴 Идет сейчас</span>
-                <h3 className="tournament-name">{mockTournaments.ongoing.name}</h3>
-                <div className="tournament-details">
-                  <div className="tournament-detail">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-.22-13h-.06c-.4 0-.72.32-.72.72v4.72c0 .35.18.68.49.86l4.15 2.49c.34.2.78.1.98-.24.21-.34.1-.79-.25-.99l-3.87-2.3V7.72c0-.4-.32-.72-.72-.72z" />
-                    </svg>
-                    <span>{mockTournaments.ongoing.round} тур из {mockTournaments.ongoing.totalRounds}</span>
-                  </div>
-                  <div className="tournament-detail">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-1 .05 1.16.84 2 1.87 2 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                    </svg>
-                    <span>{mockTournaments.ongoing.participants} участников</span>
-                  </div>
-                </div>
-                <Link to={`/tournament/${mockTournaments.ongoing.id}`} className="tournament-link">
-                  Перейти к турниру →
-                </Link>
-              </div>
-            )}
+            <div className="tournament-card ongoing">
+              <span className="tournament-status status-ongoing">🔴 Идет сейчас</span>
+              <h3 className="tournament-name">Сейчас турниры не проводятся.</h3>
+            </div>
 
             {/* Ближайший старт */}
-            {mockTournaments.upcoming && (
-              <div className="tournament-card upcoming">
-                <span className="tournament-status status-upcoming">🟡 Старт скоро</span>
-                <h3 className="tournament-name">{mockTournaments.upcoming.name}</h3>
-                <div className="tournament-details">
-                  <div className="tournament-detail">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
-                    </svg>
-                    <span>Старт: {mockTournaments.upcoming.startDate}</span>
+            <div className="tournament-card upcoming">
+              <span className="tournament-status status-upcoming">🟡 Старт скоро</span>
+              {upcomingTournament ? (
+                <>
+                  <h3 className="tournament-name">{upcomingTournament.tournament_name}</h3>
+                  <div className="tournament-date">
+                    {new Date(upcomingTournament.start_at).toLocaleDateString('ru-RU', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric'
+                    })}
                   </div>
-                  <div className="tournament-detail">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-1 .05 1.16.84 2 1.87 2 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                    </svg>
-                    <span>Регистрация: {mockTournaments.upcoming.participants}/{mockTournaments.upcoming.maxParticipants}</span>
-                  </div>
-                </div>
-                <Link to={`/tournament/${mockTournaments.upcoming.id}`} className="tournament-link">
-                  Подробнее →
-                </Link>
-              </div>
-            )}
+                </>
+              ) : (
+                <h3 className="tournament-name">Турниры пока не запланированы.</h3>
+              )}
+            </div>
 
             {/* Завершенный турнир */}
-            {mockTournaments.completed && (
-              <div className="tournament-card completed">
-                <span className="tournament-status status-completed">✅ Завершен</span>
-                <h3 className="tournament-name">{mockTournaments.completed.name}</h3>
-                <div className="tournament-details">
-                  <div className="tournament-detail">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                    <span>Победитель: {mockTournaments.completed.winner}</span>
-                  </div>
-                  <div className="tournament-detail">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
-                    </svg>
-                    <span>Завершен: {mockTournaments.completed.completedAt}</span>
-                  </div>
-                </div>
-                <Link to={`/tournament/${mockTournaments.completed.id}`} className="tournament-link">
-                  Итоги турнира →
-                </Link>
-              </div>
-            )}
+            <div className="tournament-card completed">
+              <span className="tournament-status status-completed">✅ Завершен</span>
+              <h3 className="tournament-name">Завершённых турниров пока нет.</h3>
+            </div>
           </div>
 
           {/* Два блока: Новости и Планы */}

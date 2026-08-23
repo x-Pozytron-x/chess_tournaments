@@ -141,30 +141,38 @@
 
 /* Название турнира */
 .tournament-name {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
 }
 
 /* Детали */
 .tournament-details {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .tournament-detail {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #8b949e;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #8b949e;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
 }
 
 .tournament-detail svg {
-    width: 18px;
-    height: 18px;
-    fill: #ffd700;
+  width: 18px;
+  height: 18px;
+  fill: #ffd700;
+}
+
+/* Дата турнира */
+.tournament-date {
+  color: #ffd700;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 /* Кнопка */

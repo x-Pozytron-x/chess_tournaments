@@ -1,0 +1,25 @@
+.admin-settings-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-settings-page h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.settings-content {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+.settings-content p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
