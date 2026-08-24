@@ -34,7 +34,8 @@
 
 /* Заголовок раздела */
 .section-title {
-    font-size: 2rem;
+    margin-top: 15px;
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 2rem;
     position: relative;

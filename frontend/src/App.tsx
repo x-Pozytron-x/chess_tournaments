@@ -9,6 +9,7 @@ import './index.css'
 import './App.css'
 
 import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 import { Home } from "./pages/Home/Home";
 import { Contacts } from "./pages/Contacts/Contacts";
@@ -54,40 +55,43 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        {ROUTES.map(({ path, component: Component, protected: isProtected }) => {
-          const element = <Component />
+      <main>
+        <Routes>
+          {ROUTES.map(({ path, component: Component, protected: isProtected }) => {
+            const element = <Component />
 
-          return (
-            <Route
-              key={path}
-              path={path}
-              element={
-                isProtected ? (
-                  <ProtectedRoute>{element}</ProtectedRoute>
-                ) : (
-                  element
-                )
-              }
-            />
-          )
-        })}
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminLayout />
-            </AdminRoute>
-          }
-        >
-          <Route index element={<AdminPage />} />
-          <Route path="news" element={<AdminNews />} />
-          <Route path="users" element={<AdminUsers />} />
-          <Route path="tournaments" element={<AdminTournaments />} />
-          <Route path="settings" element={<AdminSettings />} />
-        </Route>
-        <Route path="/admin/login" element={<AdminLogin />} />
-      </Routes>
+            return (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  isProtected ? (
+                    <ProtectedRoute>{element}</ProtectedRoute>
+                  ) : (
+                    element
+                  )
+                }
+              />
+            )
+          })}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route index element={<AdminPage />} />
+            <Route path="news" element={<AdminNews />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="tournaments" element={<AdminTournaments />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
+          <Route path="/admin/login" element={<AdminLogin />} />
+        </Routes>
+      </main>
+      <Footer />
     </BrowserRouter>
   )
 }

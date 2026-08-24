@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-// import { useEffect } from 'react';
-
+import { useState } from 'react';
 
 import './Header.css';
 import logotype from '../assets/logo.png';
@@ -12,14 +11,18 @@ export const Header = () => {
   const isLoading = useAuthStore(s => s.isLoading)
   const isAdmin = useAuthStore(s => s.isAdmin())
   const logout = useAuthStore(s => s.logout)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout()
     navigate('/login')
   }
 
-  return (
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
+  return (
     <header className='header'>
       <Link to="/" className="logo">
         <img src={logotype} alt="" width="70px" />
@@ -31,7 +34,6 @@ export const Header = () => {
           <span>...</span>
         ) : user ? (
           <>
-
             {isAdmin && (
               <Link to="/admin" className='nav_c' style={{marginRight: '1.5rem'}}>🤖</Link>
             )}
@@ -44,22 +46,27 @@ export const Header = () => {
           </>
         ) : (
           <>
-            <Link to="/contacts" className='nav_a'>Контакты</Link>
-            <Link to="/about" className='nav_a'>О сайте</Link>
+            <Link to="/rating" className='nav_a'>Рейтинг</Link>
             <Link to="/register" className='nav_a register'>Регистрация</Link>
             <Link to="/login" className='nav_a login'>Вход</Link>
-            <Link to="/rating" className='nav_c'>📊</Link>
           </>
         )}
-
       </nav>
-      {/* <nav className='nav'>
-        <Link to="/contacts">Контакты</Link>
-        <Link to="/about">О сайте</Link>
-        <Link to="/register" className='register'>Регистрация</Link>
-        <Link to="/login" className='login'>Вход</Link>
-      </nav> */}
+
+      {/* Mobile menu button for guest users */}
+      <button className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
+        <span className="hamburger"></span>
+      </button>
+
+      {/* Mobile menu for guest users */}
+      <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+        <nav>
+          
+          <Link to="/register" className='nav-link'  onClick={toggleMobileMenu}>Регистрация</Link>
+          <Link to="/login" className='nav-link' onClick={toggleMobileMenu}>Вход</Link>
+          <Link to="/rating" className="nav-link" onClick={toggleMobileMenu}>Рейтинг</Link>
+        </nav>
+      </div>
     </header>
   )
-
 }
