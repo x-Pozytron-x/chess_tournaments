@@ -7,10 +7,19 @@ header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
 
 
-require_once __DIR__ . '/config/env.php';
-
-$isProd = getenv('APP_ENV') === 'production';
-// $isProd = (false) ? "api/" : "";
+$envFile = __DIR__ . '/.env';
+$lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+foreach ($lines as $line) {
+  if (strpos(trim($line), '#') === 0) { continue;}
+  list($name, $value) = explode('=', $line, 2);
+  $name = trim($name);
+  $value = trim($value);
+  $value = trim($value, '"\'');
+  $_ENV[$name] = $value;
+  $_SERVER[$name] = $value;
+}
+$APP_ENV = $_ENV['APP_ENV'];
+$isProd = $APP_ENV === 'production' ? 'api/' : '';
 
 
 session_start();
