@@ -19,18 +19,8 @@ export const RatingPage = () => {
         
         // Call the new /api/rating endpoint which returns users sorted by rating
         const response = await apiFetch<{ 
-            success: boolean
             data: User[]
-          }>('/api/rating')
-
-        if (response.success && Array.isArray(response.data)) {
-          const sortedUsers = [...response.data].sort(
-            (a, b) => Number(b.user_rating) - Number(a.user_rating)
-          )
-          setUsers(sortedUsers)
-        } else {
-          throw new Error('Unexpected data structure from API')
-        }    
+          }>('/api/rating')    
 
         if (Array.isArray(response)) {
           // Filter and validate users
