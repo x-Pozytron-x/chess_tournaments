@@ -1,4 +1,8 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   max-width: 1200px;
   background: rgba(22, 27, 34, 0.8);
   backdrop-filter: blur(12px);
@@ -9,7 +13,6 @@
   justify-content: space-between;
   z-index: 1000;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  position: relative;
   padding: 0 10px;
 }
 
@@ -257,21 +260,19 @@
   justify-content: center;
   position: relative;
   background:
-    linear-gradient(
-      145deg,
-      rgba(100, 255, 218, 0.14),
-      rgba(120, 90, 255, 0.10)
+    radial-gradient(
+      circle,
+      rgba(102, 5, 180, 0.329) 20%,
+      rgba(35, 36, 35, 0.582) 70%
     );
   box-shadow:
-    0 5px 0 rgba(10, 15, 30, 0.75),
-    0 8px 18px rgba(0, 0, 0, 0.45),
-    0 0 12px rgba(100, 255, 218, 0.12);
+    0 5px 4px rgba(10, 15, 30, 0.75),
+    0 8px 14px rgba(0, 0, 0, 0.45),
+    0 2px 9px rgba(148, 31, 184, 0.342);
   backdrop-filter: blur(10px);
-  color: #64ffda;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  cursor: pointer;  
+  border: 0;
 }
 .header-icon-button::after {
   content: "";
@@ -293,4 +294,21 @@
       transparent 45%
     );
   pointer-events: none;
+}
+.header-icon-button svg {
+  color: #25baf5;
+  width: 28px;
+  height: 28px;
+  filter:
+    drop-shadow(0 0 5px rgba(112, 31, 213, 0.8))
+    drop-shadow(0 0 15px rgba(112, 31, 213, 0.65));
+  transition: 0.25s ease;
+}
+
+.header-icon-button:hover svg {
+  filter:
+    drop-shadow(0 0 5px rgba(0, 171, 255, 0.85))
+    drop-shadow(0 0 12px rgba(0, 171, 255, 0.55))
+    drop-shadow(0 0 20px rgba(0, 171, 255, 0.35));
+  transform: translateY(-1px);
 }
