@@ -9,6 +9,13 @@ $stmt = $db->query($sql);
 
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$users = array_map(static function (array $user): array {
+    $user['user_id'] = (int) $user['user_id'];
+    $user['user_rating'] = (int) $user['user_rating'];
+
+    return $user;
+}, $users);
+
 header('Content-Type: application/json');
 echo json_encode([
     'success' => true,
