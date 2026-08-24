@@ -82,6 +82,49 @@
     gap: 4rem;
 }
 
+/* Секция с аватаркой и приветствием */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    background: rgba(22, 27, 34, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 2rem;
+    padding: 3rem;
+}
+
+.profile-avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    font-weight: 800;
+    color: #0a0c0f;
+    box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.profile-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.profile-text p {
+    color: #b1bac4;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
 
 /* Стек-технологий */
 .tech-stack {
@@ -290,6 +333,18 @@
     .about-header h1 {
         font-size: 3rem;
     }
+    
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+    }
+    
     .motivation-grid {
         grid-template-columns: 1fr;
     }
