@@ -13,12 +13,12 @@ export const About = () => {
           </div>
 
           <div className="about-content">
-            <div className="profile-section">
-              <div className="profile-avatar">
+            <div className="creator-section">
+              <div className="creator-avatar">
                 ♞
               </div>
-              <div className="profile-text">
-                <h2>Привет! Я - Pozytron</h2>
+              <div className="creator-text">
+                <h2>Привет! <br/> Я - Pozytron</h2>
                 <p>
                   Программист, шахматист-любитель и просто человек, который любит
                   создавать полезные вещи. Днём пишу код, вечером играю в шахматы

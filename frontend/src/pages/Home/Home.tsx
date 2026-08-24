@@ -138,7 +138,15 @@ export function Home() {
             {/* Новости */}
             <div className="info-card">
               <h3>
-                <span>📰</span> Новости
+                <svg style={{ width: '34px',
+  height: '34px', color: '#2ca7e6'}} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M4.5 6.5H15.5V17C15.5 18.24 16.51 19.25 17.75 19.25C18.99 19.25 20 18.24 20 17V9H15.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M4.5 19.25H17.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M4.5 6.5V17C4.5 18.24 5.5 19.25 6.5 19.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7.25 9.5H12.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M7.25 12.25H12.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M7.25 15H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/> </svg>
+ Новости
               </h3>
               <ul className="news-list">
                 {Array.isArray(news) && news
@@ -170,7 +178,17 @@ export function Home() {
             {/* Планы */}
             <div className="info-card">
               <h3>
-                <span>🚀</span> В планах
+               <svg viewBox="0 0 24 24" fill="none" style={{ width: '34px',
+                height: '34px', color: '#2ca7e6'}} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="5.5" width="16" height="14.5" rx="2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 9.75H20" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 3.25V6.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                <path d="M16 3.25V6.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                <circle cx="8.25" cy="13.5" r="0.9" fill="currentColor"/>
+                <circle cx="12" cy="13.5" r="0.9" fill="currentColor"/>
+                <circle cx="15.75" cy="13.5" r="0.9" fill="currentColor"/>
+              </svg>
+ В планах
               </h3>
               <ul className="plans-list">
                 {Array.isArray(news) && news.map(p => (

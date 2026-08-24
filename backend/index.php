@@ -6,7 +6,11 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
 
-$isProd = (false) ? "api/" : "";
+
+require_once __DIR__ . '/config/env.php';
+
+$isProd = getenv('APP_ENV') === 'production';
+// $isProd = (false) ? "api/" : "";
 
 
 session_start();

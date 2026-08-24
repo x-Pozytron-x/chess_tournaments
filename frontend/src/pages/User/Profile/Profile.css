@@ -1,12 +1,12 @@
 /* Profile.css - CyberChess Glassmorphism Design System */
-.profile-container {
-  max-width: 800px;
+.creator-container {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
   box-sizing: border-box;
 }
 
-.profile-header {
+.creator-header {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,11 +19,11 @@
 
 
 
-.profile-header-info {
+.creator-header-info {
   width: 100%;
 }
 
-.profile-username {
+.creator-username {
   font-size: 2rem;
   margin: 0.5rem 0;
   color: #f9fafb;
@@ -34,14 +34,14 @@
   max-width: 100%;
 }
 
-.profile-rating {
+.creator-rating {
   font-size: 1.2rem;
   color: #06b6d4;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-.profile-fullname {
+.creator-fullname {
   font-size: 1.1rem;
   color: #9ca3af;
   margin-bottom: 1.5rem;
@@ -52,7 +52,7 @@
   max-width: 100%;
 }
 
-.profile-section {
+.creator-section {
   display: flex;
   border-radius: 12px;
   padding: 1.5rem;
@@ -63,7 +63,7 @@
   width: 100%;
 }
 
-.profile-section-title {
+.creator-section-title {
   width: 100%;
   font-size: 1.3rem;
   color: #e5e7eb;
@@ -76,17 +76,17 @@
   overflow-wrap: break-word;
 }
 
-.profile-info-grid {
+.creator-info-grid {
   width: 100%;
   box-sizing: border-box;
 }
 
-.profile-info-item {
+.creator-info-item {
   display: flex;
   margin-bottom: 0.5rem;
 }
 
-.profile-info-label {
+.creator-info-label {
   width: 120px;  
   font-size: 0.9rem;
   color: #9ca3af;
@@ -97,7 +97,7 @@
   overflow-wrap: break-word;
 }
 
-.profile-info-value {
+.creator-info-value {
   font-size: 1rem;
   color: #f9fafb;
   font-weight: 500;
@@ -108,7 +108,7 @@
   margin-bottom: 0.5rem;
 }
 
-.profile-roles {
+.creator-roles {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -218,4 +218,39 @@
   hyphens: auto;
   overflow-wrap: break-word;
   max-width: 100%;
+}
+
+/* Desktop responsive styles */
+@media (min-width: 769px) {
+  .creator-container {
+    padding: 2rem;
+  }
+  
+  .creator-header {
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .creator-header-info {
+    text-align: left;
+  }
+  
+  .creator-section {
+    flex-direction: column;
+  }
+  
+  
+  
+  .tournament-stats {
+    gap: 15px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .stat-item {
+    padding: 1.5rem;
+  }
 }

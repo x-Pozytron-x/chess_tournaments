@@ -13,47 +13,70 @@ const formatDate = (dateString: string): string => {
 export const ProfileCurrent = () => {
   const currentUser = useAuthStore(state => state.user)
   const [loading, setLoading] = useState(true)
+  const checkAuth = useAuthStore(state => state.checkAuth)
+  const isLoading = useAuthStore(state => state.isLoading)
 
+  // Обновляем данные при монтировании компонента
   useEffect(() => {
+    // If we already have user data, we should check if it's complete
+    // If it's not complete (missing key fields like user_rating, created_at, etc.), fetch complete data
     if (currentUser) {
-      setLoading(false)
+      // Check if we have complete user data (all required fields)
+      const isComplete = currentUser.user_rating !== undefined && 
+                        currentUser.created_at !== undefined &&
+                        currentUser.is_active !== undefined &&
+                        currentUser.roles !== undefined;
+      
+      if (isComplete) {
+        setLoading(false);
+        return;
+      }
     }
-  }, [currentUser])
+    
+    // If no complete user data, fetch fresh data
+    const fetchData = async () => {
+      // Always call checkAuth to get complete user data from /api/me
+      await checkAuth();
+      setLoading(false);
+    }
+    
+    fetchData();
+  }, [currentUser, isLoading])
 
   if (loading) {
-    return <div className="profile-container">Загрузка профиля...</div>
+    return <div className="creator-container">Загрузка профиля...</div>
   }
 
   if (!currentUser) {
-    return <div className="profile-container">Пользователь не найден</div>
+    return <div className="creator-container">Пользователь не найден</div>
   }
 
   return (
-    <div className="profile-container">
+    <div className="creator-container">
 
       {/* Profile Information Section */}
-      <div className="profile-section">
-        <h2 className="profile-section-title">{currentUser.user_name}</h2>
-        <div className="profile-info-grid">
-          <div className="profile-info-item">
-            <span className="profile-info-label">Рейтинг:</span>
-            <span className="profile-info-value">{currentUser.user_rating || 0}</span>
+      <div className="creator-section">
+        <h2 className="creator-section-title">{currentUser.user_name}</h2>
+        <div className="creator-info-grid">
+          <div className="creator-info-item">
+            <span className="creator-info-label">Рейтинг:</span>
+            <span className="creator-info-value">{currentUser.user_rating || 0}</span>
           </div>
-          <div className="profile-info-item">
-            <span className="profile-info-label">Email:</span>
-            <span className="profile-info-value">{currentUser.user_email || ' - '}</span>
+          <div className="creator-info-item">
+            <span className="creator-info-label">Email:</span>
+            <span className="creator-info-value">{currentUser.user_email || ' - '}</span>
           </div>
-          <div className="profile-info-item">
-            <span className="profile-info-label">На сайте с:</span>
-            <span className="profile-info-value">{currentUser.created_at ? formatDate(currentUser.created_at) : '—'}</span>
+          <div className="creator-info-item">
+            <span className="creator-info-label">На сайте с:</span>
+            <span className="creator-info-value">{currentUser.created_at ? formatDate(currentUser.created_at) : '—'}</span>
           </div>
-          <div className="profile-info-item">
-            <span className="profile-info-label">Статус:</span>
-            <span className="profile-info-value">{currentUser.is_active ? 'Активен' : 'Неактивен'}</span>
+          <div className="creator-info-item">
+            <span className="creator-info-label">Статус:</span>
+            <span className="creator-info-value">{currentUser.is_active ? 'Активен' : 'Неактивен'}</span>
           </div>
-          <div className="profile-info-item">
-            <span className="profile-info-label">Роль:</span>
-            <span className="profile-info-value">
+          <div className="creator-info-item">
+            <span className="creator-info-label">Роль:</span>
+            <span className="creator-info-value">
               {currentUser.roles && currentUser.roles.length > 0 ? currentUser.roles[0].role_name : 'Пользователь'}
             </span>
           </div>
@@ -61,8 +84,8 @@ export const ProfileCurrent = () => {
       </div>
 
       {/* Tournament Statistics Section */}
-      <div className="profile-section">
-        <h2 className="profile-section-title">Статистика турниров</h2>
+      <div className="creator-section">
+        <h2 className="creator-section-title">Статистика турниров</h2>
         <div className="tournament-stats">
           <div className="stat-item">
             <div className="stat-label">Участий</div>
@@ -94,8 +117,8 @@ export const ProfileCurrent = () => {
       </div>
 
       {/* Links Section */}
-      <div className="profile-section">
-        <h2 className="profile-section-title">Ссылки</h2>
+      <div className="creator-section">
+        <h2 className="creator-section-title">Ссылки</h2>
         <div className="links-container">
           {currentUser.user_chesscom && (
             <a href={`https://www.chess.com/member/${currentUser.user_chesscom}`} target="_blank" rel="noopener noreferrer">
