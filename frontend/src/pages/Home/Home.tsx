@@ -39,32 +39,12 @@ export function Home() {
       .finally(() => setLoading(false))
     
     // Получаем турниры
-    apiFetch('/api/tournaments')
+    apiFetch<{ tournaments: Tournament[] }>('/api/tournaments')
       .then(response => {
-        // Make sure response is properly structured before accessing properties
-        if (response && typeof response === 'object') {
-          // Handle the case where response is the tournaments data directly
-          if (response.tournaments !== undefined) {
-            setTournaments(response.tournaments || []);
-          } else if (response.success !== undefined) {
-            // Handle the expected response structure
-            if (response.success) {
-              setTournaments(response.tournaments || []);
-            } else {
-              console.error('API returned error:', response);
-              setTournaments([]);
-            }
-          } else {
-            // If it's not structured as expected, try to treat it as raw tournament array
-            if (Array.isArray(response)) {
-              setTournaments(response);
-            } else {
-              console.error('Unexpected response format:', response);
-              setTournaments([]);
-            }
-          }
+        if (response && typeof response === 'object' && 'tournaments' in response) {
+          setTournaments(response.tournaments || []);
         } else {
-          console.error('Invalid API response:', response);
+          console.error('Unexpected response format:', response);
           setTournaments([]);
         }
       })
@@ -72,7 +52,6 @@ export function Home() {
         console.error('API call failed completely:', error);
         setTournaments([]);
       })
-  }, [])
   }, [])
   
   // Функция для получения ближайшего запланированного турнира

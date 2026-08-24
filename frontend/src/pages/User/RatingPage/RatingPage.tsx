@@ -4,14 +4,7 @@ import type { User } from '@/types/User'
 import { Link } from 'react-router-dom'
 import './RatingPage.css';
 
-// Helper function to format date from ISO format to DD.MM.YYYY
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString)
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const year = date.getFullYear()
-  return `${day}.${month}.${year}`
-}
+
 
 export const RatingPage = () => {
   const [users, setUsers] = useState<User[]>([])

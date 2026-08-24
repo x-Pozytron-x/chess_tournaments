@@ -1,15 +1,6 @@
 import './Tournaments.css';
 import { useState, useEffect } from 'react';
 import { apiFetch } from '@/api/apiFetch'
-
-interface Tournament {
-  tournament_id: number
-  tournament_name: string
-  tournament_format: string
-  tournament_status: string
-  start_at: string
-  end_at: string
-}
 export function AdminTournaments() {
   const [tournamentData, setTournamentData] = useState({
     tournament_name: '',
@@ -67,7 +58,7 @@ export function AdminTournaments() {
         setTournaments(data.tournaments || []);
       } catch (error) {
         console.error('Error fetching tournaments:', error);
-        setError('Ошибка загрузки турниров');
+        setMessage({ type: 'error', text: 'Ошибка загрузки турниров' });
       }
     };
 

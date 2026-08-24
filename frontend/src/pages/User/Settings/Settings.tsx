@@ -19,7 +19,6 @@ export const Settings: FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [changingPassword, setChangingPassword] = useState(false);
-  const [passwordMessage, setPasswordMessage] = useState('');
 
   useEffect(() => {
     if (!currentUser) return;
@@ -72,11 +71,9 @@ export const Settings: FC = () => {
       return;
     }
     if (newPassword !== confirmPassword) {
-      setPasswordMessage('Passwords do not match');
       return;
     }
     setChangingPassword(true);
-    setPasswordMessage('');
     try {
       await apiFetch('/api/me/password', {
         method: 'POST',
@@ -88,17 +85,13 @@ export const Settings: FC = () => {
           new_password: newPassword,
         }),
       });
-      setPasswordMessage('Password changed successfully');
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
     } catch (error: any) {
       if (error.status === 401) {
-        setPasswordMessage('Current password is incorrect');
       } else if (error.status === 400 || error.error === 'PASSWORD_TOO_SHORT') {
-        setPasswordMessage('Password is too short');
       } else {
-        setPasswordMessage('Failed to change password');
       }
     } finally {
       setChangingPassword(false);

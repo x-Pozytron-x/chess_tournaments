@@ -9,6 +9,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -16,7 +17,7 @@
     "rewriteRelativeImportExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "composite": true,
+    /*"composite": true, */
     "jsx": "react-jsx",
 
     /* Linting */

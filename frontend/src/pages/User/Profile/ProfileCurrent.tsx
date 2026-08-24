@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/authStore'
-import type { User } from '@/types/User'
 
 // Helper function to format date from ISO format to DD.MM.YYYY
 const formatDate = (dateString: string): string => {
