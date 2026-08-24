@@ -50,7 +50,7 @@ try {
   }
 
   $setClause = implode(', ', $setClauses);
-  $sql = "UPDATE chess_user_data SET $setClause WHERE user_id = :user_id";
+  $sql = "UPDATE chess_users SET $setClause WHERE user_id = :user_id";
 
   $stmt = $db->prepare($sql);
   $params = array_merge($updateData, [':user_id' => $userId]);
@@ -67,7 +67,7 @@ try {
   }
 
   $stmt = $db->prepare("SELECT user_telegram, user_chesscom, user_lichess, user_email
-    FROM chess_user_data
+    FROM chess_users
     WHERE user_id = :user_id
     LIMIT 1
   ");
