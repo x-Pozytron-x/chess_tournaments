@@ -8,8 +8,8 @@
         "baseURL": "http://172.31.112.1:8080/v1"
       },
       "models": {
-        "Qwen3-Coder-30B-A3B-Instruct-Q4_K_M": {
-          "name": "Qwen3-Coder-30B",
+        "Qwen3.6-27B-A3B-CoderX-Q4_K_M": {
+          "name": "Qwen3.6-27B-A3B",
           "capabilities": {
             "tools": true
           },
