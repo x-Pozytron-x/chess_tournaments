@@ -115,31 +115,31 @@ export const ProfileOther = () => {
       {/* Tournament Statistics Section */}
       <div className="profile-section">
         <h2 className="profile-section-title">Статистика турниров</h2>
-        <div className="tournament-stats">
-          <div className="stat-item">
-            <div className="stat-label">Участий</div>
-            <div className="stat-value">{user.user_tournaments_count || 0}</div>
+        <div className="profile-tournament-stats">
+          <div className="profile-stat-item">
+            <div className="profile-stat-label">Участий</div>
+            <div className="profile-stat-value">{user.user_tournaments_count || 0}</div>
           </div>
-          <div className="stat-item">
-            <div className="stat-label">Побед</div>
-            <div className="stat-value">{user.user_tournaments_wins || 0}</div>
+          <div className="profile-stat-item">
+            <div className="profile-stat-label">Побед</div>
+            <div className="profile-stat-value">{user.user_tournaments_wins || 0}</div>
           </div>
           {user.user_tournaments_first_places !== undefined && user.user_tournaments_first_places !== null && (
-            <div className="stat-item">
-              <div className="stat-label">Первые места</div>
-              <div className="stat-value">{user.user_tournaments_first_places || 0}</div>
+            <div className="profile-stat-item">
+              <div className="profile-stat-label">Первые места</div>
+              <div className="profile-stat-value">{user.user_tournaments_first_places || 0}</div>
             </div>
           )}
           {user.user_tournaments_second_places !== undefined && user.user_tournaments_second_places !== null && (
-            <div className="stat-item">
-              <div className="stat-label">Вторые места</div>
-              <div className="stat-value">{user.user_tournaments_second_places || 0}</div>
+            <div className="profile-stat-item">
+              <div className="profile-stat-label">Вторые места</div>
+              <div className="profile-stat-value">{user.user_tournaments_second_places || 0}</div>
             </div>
           )}
           {user.user_tournaments_third_places !== undefined && user.user_tournaments_third_places !== null && (
-            <div className="stat-item">
-              <div className="stat-label">Третьи места</div>
-              <div className="stat-value">{user.user_tournaments_third_places || 0}</div>
+            <div className="profile-stat-item">
+              <div className="profile-stat-label">Третьи места</div>
+              <div className="profile-stat-value">{user.user_tournaments_third_places || 0}</div>
             </div>
           )}
         </div>
@@ -148,7 +148,7 @@ export const ProfileOther = () => {
       {/* Links Section */}
       <div className="profile-section">
         <h2 className="profile-section-title">Ссылки</h2>
-        <div className="links-container">
+        <div className="profile-links-container">
           {user.user_chesscom && (
             <a href={`https://www.chess.com/member/${user.user_chesscom}`} target="_blank" rel="noopener noreferrer">
               Chess.com
@@ -165,7 +165,7 @@ export const ProfileOther = () => {
             </a>
           )}
           {(!user.user_chesscom && !user.user_lichess && !user.user_telegram) && (
-            <p className="no-links-message">Нет внешних профилей</p>
+            <p className="profile-no-links-message">Нет внешних профилей</p>
           )}
         </div>
       </div>

@@ -67,7 +67,7 @@
     border-radius: 2px;
 }
 
-.about-header .subtitle {
+.about-header .about-subtitle {
     color: #8b949e;
     font-size: 1.3rem;
     font-weight: 300;
@@ -83,7 +83,7 @@
 }
 
 /* Секция с аватаркой и приветствием */
-.creator-section {
+.about-creator-section {
     display: flex;
     align-items: center;
     gap: 4rem;
@@ -95,7 +95,7 @@
     padding: 3rem;
 }
 
-.creator-avatar {
+.about-creator-avatar {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -110,7 +110,7 @@
     flex-shrink: 0;
 }
 
-.creator-text h2 {
+.about-creator-text h2 {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
@@ -119,7 +119,7 @@
     -webkit-text-fill-color: transparent;
 }
 
-.creator-text p {
+.about-creator-text p {
     color: #b1bac4;
     font-size: 1.2rem;
     line-height: 1.6;
@@ -127,13 +127,13 @@
 }
 
 /* Стек-технологий */
-.tech-stack {
+.about-tech-stack {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-.tech-stack h3 {
+.about-tech-stack h3 {
     font-size: 2rem;
     font-weight: 700;
     color: #fff;
@@ -142,7 +142,7 @@
     margin-bottom: 1rem;
 }
 
-.tech-stack h3::before {
+.about-tech-stack h3::before {
     content: "⚡";
     position: absolute;
     left: -2.5rem;
@@ -150,13 +150,13 @@
     color: #ffd700;
 }
 
-.tech-grid {
+.about-tech-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
 }
 
-.tech-card {
+.about-tech-card {
     background: rgba(22, 27, 34, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -168,13 +168,13 @@
     overflow: hidden;
 }
 
-.tech-card:hover {
+.about-tech-card:hover {
     transform: translateY(-5px);
     border-color: rgba(255, 215, 0, 0.3);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.tech-card::before {
+.about-tech-card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -186,30 +186,30 @@
     transition: opacity 0.3s ease;
 }
 
-.tech-card:hover::before {
+.about-tech-card:hover::before {
     opacity: 1;
 }
 
-.tech-icon {
+.about-tech-icon {
     font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
-.tech-card h4 {
+.about-tech-card h4 {
     color: white;
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
-.tech-card p {
+.about-tech-card p {
     color: #8b949e;
     font-size: 1rem;
     line-height: 1.5;
 }
 
 /* Мотивация */
-.motivation-section {
+.about-motivation-section {
     background: rgba(22, 27, 34, 0.5);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -219,27 +219,27 @@
     text-align: center;
 }
 
-.motivation-section h3 {
+.about-motivation-section h3 {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 2rem;
     color: #fff;
 }
 
-.motivation-grid {
+.about-motivation-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
 
-.motivation-item {
+.about-motivation-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
 }
 
-.motivation-icon {
+.about-motivation-icon {
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -253,26 +253,26 @@
     transition: all 0.3s ease;
 }
 
-.motivation-item:hover .motivation-icon {
+.about-motivation-item:hover .about-motivation-icon {
     background: #ffd700;
     color: #0a0c0f;
     transform: rotate(360deg);
 }
 
-.motivation-item p {
+.about-motivation-item p {
     color: #b1bac4;
     font-size: 1.1rem;
     line-height: 1.6;
 }
 
 /* Цитата */
-.quote-section {
+.about-quote-section {
     text-align: center;
     padding: 3rem;
     position: relative;
 }
 
-.quote-section .blockquote {
+.about-quote-section .about-blockquote {
     font-size: 1.8rem;
     font-weight: 300;
     color: #fff;
@@ -282,8 +282,8 @@
     position: relative;
 }
 
-.quote-section .blockquote::before,
-.quote-section .blockquote::after {
+.about-quote-section .about-blockquote::before,
+.about-quote-section .about-blockquote::after {
     content: '"';
     font-size: 4rem;
     color: #ffd700;
@@ -291,17 +291,17 @@
     position: absolute;
 }
 
-.quote-section .blockquote::before {
+.about-quote-section .about-blockquote::before {
     left: -2rem;
     top: -1rem;
 }
 
-.quote-section .blockquote::after {
+.about-quote-section .about-blockquote::after {
     right: -2rem;
     bottom: -2rem;
 }
 
-.quote-author {
+.about-quote-author {
     margin-top: 2rem;
     color: #8b949e;
     font-size: 1.1rem;
@@ -309,7 +309,7 @@
 }
 
 /* Шахматная доска декоративная */
-.chess-decoration {
+.about-chess-decoration {
     position: absolute;
     bottom: -100px;
     right: -100px;
@@ -334,54 +334,54 @@
         font-size: 3rem;
     }
     
-    .profile-section {
+    .about-profile-section {
         flex-direction: column;
         text-align: center;
         padding: 2rem;
         gap: 1.5rem;
     }
     
-    .profile-avatar {
+    .about-profile-avatar {
         width: 150px;
         height: 150px;
         font-size: 4rem;
     }
     
-    .profile-text h2 {
+    .about-profile-text h2 {
         font-size: 2rem;
     }
     
-    .profile-text p {
+    .about-profile-text p {
         font-size: 1rem;
     }
     
-    .tech-grid {
+    .about-tech-grid {
         grid-template-columns: 1fr;
     }
     
-    .motivation-grid {
+    .about-motivation-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
     
-    .motivation-item {
+    .about-motivation-item {
         align-items: center;
         text-align: center;
     }
     
-    .motivation-icon {
+    .about-motivation-icon {
         width: 60px;
         height: 60px;
         font-size: 1.5rem;
     }
     
-    .quote-section blockquote {
+    .about-quote-section about-blockquote {
         font-size: 1.4rem;
         padding: 0 1rem;
     }
     
-    .quote-section .blockquote::before,
-    .quote-section .blockquote::after {
+    .about-quote-section .about-blockquote::before,
+    .about-quote-section .about-blockquote::after {
         font-size: 2rem;
         top: -0.5rem;
         left: -1rem;
@@ -401,7 +401,7 @@
         gap: 2rem;
     }
     
-    .motivation-section {
+    .about-motivation-section {
         padding: 2rem;
     }
 }
@@ -412,33 +412,33 @@
         font-size: 2.2rem;
     }
     
-    .about-header .subtitle {
+    .about-header .about-subtitle {
         font-size: 1.1rem;
     }
     
-    .profile-avatar {
+    .about-profile-avatar {
         width: 120px;
         height: 120px;
         font-size: 3rem;
     }
     
-    .tech-card {
+    .about-tech-card {
         padding: 1.5rem;
     }
     
-    .tech-card h4 {
+    .about-tech-card h4 {
         font-size: 1.1rem;
     }
     
-    .tech-card p {
+    .about-tech-card p {
         font-size: 0.9rem;
     }
     
-    .quote-section blockquote {
+    .about-quote-section about-blockquote {
         font-size: 1.2rem;
     }
     
-    .quote-author {
+    .about-quote-author {
         font-size: 1rem;
     }
 }

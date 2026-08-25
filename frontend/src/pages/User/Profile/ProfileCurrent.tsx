@@ -44,39 +44,39 @@ export const ProfileCurrent = () => {
   }, [currentUser, isLoading])
 
   if (loading) {
-    return <div className="creator-container">Загрузка профиля...</div>
+    return <div className="profile-creator-container">Загрузка профиля...</div>
   }
 
   if (!currentUser) {
-    return <div className="creator-container">Пользователь не найден</div>
+    return <div className="profile-creator-container">Пользователь не найден</div>
   }
 
   return (
-    <div className="creator-container">
+    <div className="profile-creator-container">
 
       {/* Profile Information Section */}
-      <div className="creator-section">
-        <h2 className="creator-section-title">{currentUser.user_name}</h2>
-        <div className="creator-info-grid">
-          <div className="creator-info-item">
-            <span className="creator-info-label">Рейтинг:</span>
-            <span className="creator-info-value">{currentUser.user_rating || 0}</span>
+      <div className="profile-creator-section">
+        <h2 className="profile-creator-section-title">{currentUser.user_name}</h2>
+        <div className="profile-creator-info-grid">
+          <div className="profile-creator-info-item">
+            <span className="profile-creator-info-label">Рейтинг:</span>
+            <span className="profile-creator-info-value">{currentUser.user_rating || 0}</span>
           </div>
-          <div className="creator-info-item">
-            <span className="creator-info-label">Email:</span>
-            <span className="creator-info-value">{currentUser.user_email || ' - '}</span>
+          <div className="profile-creator-info-item">
+            <span className="profile-creator-info-label">Email:</span>
+            <span className="profile-creator-info-value">{currentUser.user_email || ' - '}</span>
           </div>
-          <div className="creator-info-item">
-            <span className="creator-info-label">На сайте с:</span>
-            <span className="creator-info-value">{currentUser.created_at ? formatDate(currentUser.created_at) : '—'}</span>
+          <div className="profile-creator-info-item">
+            <span className="profile-creator-info-label">На сайте с:</span>
+            <span className="profile-creator-info-value">{currentUser.created_at ? formatDate(currentUser.created_at) : '—'}</span>
           </div>
-          <div className="creator-info-item">
-            <span className="creator-info-label">Статус:</span>
-            <span className="creator-info-value">{currentUser.is_active ? 'Активен' : 'Неактивен'}</span>
+          <div className="profile-creator-info-item">
+            <span className="profile-creator-info-label">Статус:</span>
+            <span className="profile-creator-info-value">{currentUser.is_active ? 'Активен' : 'Неактивен'}</span>
           </div>
-          <div className="creator-info-item">
-            <span className="creator-info-label">Роль:</span>
-            <span className="creator-info-value">
+          <div className="profile-creator-info-item">
+            <span className="profile-creator-info-label">Роль:</span>
+            <span className="profile-creator-info-value">
               {currentUser.roles && currentUser.roles.length > 0 ? currentUser.roles[0].role_name : 'Пользователь'}
             </span>
           </div>
@@ -84,42 +84,42 @@ export const ProfileCurrent = () => {
       </div>
 
       {/* Tournament Statistics Section */}
-      <div className="creator-section">
-        <h2 className="creator-section-title">Статистика турниров</h2>
-        <div className="tournament-stats">
-          <div className="stat-item">
-            <div className="stat-label">Участий</div>
-            <div className="stat-value">{currentUser.user_tournaments_count || 0}</div>
+      <div className="profile-creator-section">
+        <h2 className="profile-creator-section-title">Статистика турниров</h2>
+        <div className="profile-tournament-stats">
+          <div className="profile-stat-item">
+            <div className="profile-stat-label">Участий</div>
+            <div className="profile-stat-value">{currentUser.user_tournaments_count || 0}</div>
           </div>
-          <div className="stat-item">
-            <div className="stat-label">Побед</div>
-            <div className="stat-value">{currentUser.user_tournaments_wins || 0}</div>
+          <div className="profile-stat-item">
+            <div className="profile-stat-label">Побед</div>
+            <div className="profile-stat-value">{currentUser.user_tournaments_wins || 0}</div>
           </div>
           {currentUser.user_tournaments_first_places !== undefined && currentUser.user_tournaments_first_places !== null && (
-            <div className="stat-item">
-              <div className="stat-label">Первые места</div>
-              <div className="stat-value">{currentUser.user_tournaments_first_places || 0}</div>
+            <div className="profile-stat-item">
+              <div className="profile-stat-label">Первые места</div>
+              <div className="profile-stat-value">{currentUser.user_tournaments_first_places || 0}</div>
             </div>
           )}
           {currentUser.user_tournaments_second_places !== undefined && currentUser.user_tournaments_second_places !== null && (
-            <div className="stat-item">
-              <div className="stat-label">Вторые места</div>
-              <div className="stat-value">{currentUser.user_tournaments_second_places || 0}</div>
+            <div className="profile-stat-item">
+              <div className="profile-stat-label">Вторые места</div>
+              <div className="profile-stat-value">{currentUser.user_tournaments_second_places || 0}</div>
             </div>
           )}
           {currentUser.user_tournaments_third_places !== undefined && currentUser.user_tournaments_third_places !== null && (
-            <div className="stat-item">
-              <div className="stat-label">Третьи места</div>
-              <div className="stat-value">{currentUser.user_tournaments_third_places || 0}</div>
+            <div className="profile-stat-item">
+              <div className="profile-stat-label">Третьи места</div>
+              <div className="profile-stat-value">{currentUser.user_tournaments_third_places || 0}</div>
             </div>
           )}
         </div>
       </div>
 
       {/* Links Section */}
-      <div className="creator-section">
-        <h2 className="creator-section-title">Ссылки</h2>
-        <div className="links-container">
+      <div className="profile-creator-section">
+        <h2 className="profile-creator-section-title">Ссылки</h2>
+        <div className="profile-links-container">
           {currentUser.user_chesscom && (
             <a href={`https://www.chess.com/member/${currentUser.user_chesscom}`} target="_blank" rel="noopener noreferrer">
               Chess.com
@@ -136,7 +136,7 @@ export const ProfileCurrent = () => {
             </a>
           )}
           {(!currentUser.user_chesscom && !currentUser.user_lichess && !currentUser.user_telegram) && (
-            <p className="no-links-message">Нет внешних профилей</p>
+            <p className="profile-no-links-message">Нет внешних профилей</p>
           )}
         </div>
       </div>
